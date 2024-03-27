@@ -9,7 +9,7 @@ import {
 import Example from '../components/Example'; // Ajusta la ruta según tu estructura
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
-
+//no quiere coger ningun cambiooooooo :c
 const Home: React.FC = () => {
   return (
     <IonPage>
