@@ -234,6 +234,10 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #1e1e1e;
   }
 }
+ion-app {
+  background-color: #1776a7;
+}
+
 
 html {
   /* For more information on dynamic font scaling, visit the documentation: 

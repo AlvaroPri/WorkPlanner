@@ -1,0 +1,42 @@
+/* Login.css */
+.scrollable-content {
+  max-height: 100vh; /* Establece una altura máxima para el contenido */
+  overflow-y: auto; /* Habilita el desplazamiento vertical cuando sea necesario */
+}
+
+.logo-img {
+  width: 100px; /* Establece el ancho de la imagen */
+  position: absolute; /* Establece la posición absoluta */
+  top: 10px; /* Ajusta la distancia desde arriba */
+  left: 10px; /* Ajusta la distancia desde la izquierda */
+}
+.login-card {
+  background-color: #ffff; /* Establece el color de fondo */
+  scroll-behavior: auto;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff; 
+
+}
+
+.input-container div {
+  margin-bottom: 5px;
+}
+
+.oval-button {
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.forgot-button {
+  margin-bottom: 20px;
+}
+.input-container{
+  align-items: center;
+  
+}
