@@ -42,6 +42,7 @@ const Login: React.FC = () => {
 
       if (!data) {
         console.error("Credenciales incorrectas");
+        console.log("incorrectas")
         return;
       }
 
