@@ -1,13 +1,15 @@
+import React from 'react';
 import './ExploreContainer.css';
 
-interface ContainerProps { }
+interface ExploreContainerProps { }
 
-const ExploreContainer: React.FC<ContainerProps> = () => {
+const ExploreContainer: React.FC<ExploreContainerProps> = () => {
   return (
-    <div id="container">
-      <strong>Exitosamente</strong>
-      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-
+    <div className="explore-container">
+      <div className="option">In Progress</div>
+      <div className="option">Complete</div>
+      <div className="option">Pending Task</div>
+      <div className="option">Log Out</div>
     </div>
   );
 };

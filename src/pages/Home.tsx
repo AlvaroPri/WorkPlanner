@@ -1,43 +1,33 @@
+import React, { useState } from 'react';
 import './Home.css';
-import Login from '../components/Login';
-import React from 'react';
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
+  IonButton,
+  IonIcon
 } from '@ionic/react';
-import Example from '../components/Example'; // Ajusta la ruta según tu estructura
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
 
 const Home: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>WorkPlanner</IonTitle>
+          <IonButton slot="end" onClick={toggleMenu}>
+            <IonIcon name={menuOpen ? 'close-circle' : 'menu'} />
+          </IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank0</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <Login />
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        {/* Agrega el formulario de inicio de sesión */}
-        <Example />
-
-        {/* Agrega el componente de exploración */}
-        <ExploreContainer />
       </IonContent>
     </IonPage>
   );

@@ -52,7 +52,7 @@ const Login: React.FC = () => {
       }
 
       // Si las credenciales son correctas, redirige al usuario a la página principal
-      history.push("/explore");
+      history.push("/home");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     }
