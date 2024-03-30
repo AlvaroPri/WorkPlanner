@@ -10,7 +10,7 @@ import {
   IonInput,
   IonLabel,
   IonButton,
-  IonDatetime
+  IonDatetime,
 } from '@ionic/react';
 import { createClient } from '@supabase/supabase-js';
 

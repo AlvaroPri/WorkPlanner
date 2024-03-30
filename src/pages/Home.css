@@ -1,0 +1,59 @@
+.menu {
+    position: fixed;
+    top: 56px; /* Altura del header */
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    max-height: calc(100% - 56px); /* Resta la altura del header */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 9999;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+  }
+  
+  .menu.open {
+    transform: translateX(0);
+  }
+  
+  .menu-list {
+    padding: 0;
+  }
+  
+  .menu-item {
+    padding: 16px;
+  }
+  
+  .menu-item:hover {
+    background-color: #f4f4f4;
+  }
+  
+  .main-content {
+    padding-top: 56px; /* Ajusta según la altura del header */
+  }
+  
+  .header-title {
+    margin: 0 auto;
+  }
+  
+  .card {
+    margin: 20px;
+  }
+  
+  .calendar {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .bottom-button {
+    margin: 20px;
+  }
+  
