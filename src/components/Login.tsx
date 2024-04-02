@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { createClient } from '@supabase/supabase-js';
 import './Login.css'; // Importa el archivo CSS para aplicar estilos personalizados
-import logo from './logo.png'; // Importa la imagen de tu logo
+import logo from '../img/Logo.png'; // Importa la imagen de tu logo
 
 const supabaseUrl = "https://gzaimljsjrzcamhdwwjr.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6YWltbGpzanJ6Y2FtaGR3d2pyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMDgwOTAzOSwiZXhwIjoyMDI2Mzg1MDM5fQ.7Gik0B0Sj0oQrU-UNYkH8RhSUO66CCEifQPowlVuVfU";
@@ -70,15 +70,13 @@ const Login: React.FC = () => {
   return (
     <IonCard className="login-card"> {/* Aplica la clase de estilo al componente IonCard */}
       <IonCardHeader>
-        <img src="src/img/Logo.png" className="logo-img" /> {/* Agrega la imagen en la esquina superior izquierda */}
-        <IonCardTitle style={{'margin-left':'80px', "color": "#fc4f00", "font-size":"37px"}} >WorkPlanner</IonCardTitle>
-        <IonCardSubtitle>-</IonCardSubtitle>
+        <img src= {logo} className="logo-img" /> {/* Agrega la imagen en la esquina superior izquierda */}
+        <IonCardTitle  className="TitleWP" >WorkPlanner</IonCardTitle>
       </IonCardHeader>
-      <div style={{ "text-align": "center"}}>
-      <img src="src/img/perfil1.png" className="logo-img" style={{'margin-top':'80px', "width" : "250px", "position": "relative"}} /> {/* Agrega la imagen en la esquina superior izquierda */}
-      
+      <div className="LogoPerfil">
+      <img src="src/img/perfil1.png"/> {/* Agrega la imagen en la esquina superior izquierda */}
       </div>
-      <IonCardContent  className="scrollable-content" style={{'margin-top':'90px'}}>
+      <IonCardContent  className="scrollable-content">
         <div className="input-container">
           <div>ID</div>
           <IonInput

@@ -58,10 +58,12 @@
 }
 
 /* Estilos para el contenedor del título "Projects" */
+
 .projects-title-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center; /* Centrar horizontalmente el texto */
   height: -50%; /* Ajusta el contenedor para centrar verticalmente */
 }
 
@@ -71,6 +73,7 @@
   font-size: 1.5em;
   font-weight: bold;
 }
+
 /* Estilos para el botón del menú */
 .menu-button {
   margin-left: auto; /* Empuja el botón del menú hacia el extremo derecho */
