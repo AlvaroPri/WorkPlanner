@@ -1,5 +1,10 @@
+.scroll-y {
+  overflow-y: var(--overflow);
+  overscroll-behavior-y: contain;
+}
+
 .scrollable-content {
-  max-height: 100vh;
+  max-height: calc(100vh - 5.625rem); /* 90 pixels / 16 pixels = 5.625 */
   overflow-y: auto;
   margin-top: 5.625rem; /* 90 pixels / 16 pixels = 5.625 */
 }
@@ -15,6 +20,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem;   /* Añade un relleno para mejorar el espacio entre elementos */
+
 }
 
 .input-container {
@@ -23,6 +30,8 @@
   align-items: center;
   margin-bottom: 1.25rem; /* 20 pixels / 16 pixels = 1.25 */
   background-color: #fff;
+  width: 80%; /* Ajusta el ancho del contenedor de entrada */
+  max-width: 20rem; /* Limita el ancho máximo del contenedor de entrada */
 }
 
 .input-container div {
@@ -32,6 +41,8 @@
 .oval-button {
   border-radius: 1.25rem; /* 20 pixels / 16 pixels = 1.25 */
   margin-bottom: 0.625rem; /* 10 pixels / 16 pixels = 0.625 */
+  width: 80%; /* Ajusta el ancho del botón */
+  max-width: 20rem; /* Limita el ancho máximo del botón */
 }
 
 .forgot-button {
@@ -52,4 +63,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media screen and (max-width: 600px) {
+  .input-container {
+    width: 90%; /* Ajusta el ancho del contenedor de entrada para pantallas pequeñas */
+    max-width: none; /* Elimina el límite de ancho máximo */
+  }
+
+  .oval-button {
+    width: 90%; /* Ajusta el ancho del botón para pantallas pequeñas */
+    max-width: none; /* Elimina el límite de ancho máximo */
+  }
+
+  .LogoPerfil {
+    margin-top: 8rem; /* Ajusta el margen superior para pantallas pequeñas */
+  }
 }

@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import "./Home.css";
+import "react-datepicker/dist/react-datepicker.css"; // Estilos de react-datepicker
+import "react-calendar/dist/Calendar.css"; // Estilos de react-calendar
+import Calendar from "react-calendar"; // Importa react-calendar
+import logo from "../img/Logo.png";
 import {
   IonContent,
   IonHeader,
@@ -16,11 +21,8 @@ import {
   IonLabel,
   IonImg,
 } from "@ionic/react";
-import { apps } from "ionicons/icons"; // Importa el icono de Ionic
-import "react-datepicker/dist/react-datepicker.css"; // Estilos de react-datepicker
-import "react-calendar/dist/Calendar.css"; // Estilos de react-calendar
-import Calendar from "react-calendar"; // Importa react-calendar
-import logo from "../img/Logo.png";
+
+
 const Home: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
@@ -33,6 +35,10 @@ const Home: React.FC = () => {
 
   const handleDateChange = (value: Date | Date[] | null) => {
     setSelectedDate(value);
+  };
+  const history = useHistory<any>();
+  const handleAtras = () => {
+    history.push("/login");
   };
 
   return (
@@ -72,7 +78,7 @@ const Home: React.FC = () => {
               <IonLabel>Pending Task</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonLabel>Log Out</IonLabel>
+              <IonButton className="AtrasButtom" onClick={handleAtras}>Atras</IonButton>
             </IonItem>
           </IonList>
         </div>

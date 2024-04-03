@@ -1,10 +1,10 @@
+// Código con las mejoras implementadas
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
   IonInput,
   IonButton,
@@ -23,11 +23,21 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showError, setShowError] = useState<boolean>(false); // Estado para controlar si se muestra el mensaje de error
+  const [errorMessage, setErrorMessage] = useState<string>(''); // Estado para controlar el mensaje de error específico
+  const [userInteracted, setUserInteracted] = useState<boolean>(false); // Estado para controlar si el usuario ha interactuado con los campos de entrada
   const history = useHistory<any>();
 
   const handleLogin = async () => {
+    if (!userInteracted) {
+      // Verificar si el usuario ha interactuado con los campos de entrada
+      setUserInteracted(true); // Establecer que el usuario ha interactuado con los campos de entrada
+      return;
+    }
+
     if (!username || !password) {
       console.error("Error: username o password vacío");
+      setErrorMessage(" username o password vacío"); // Establecer el mensaje de error específico
+      setShowError(true);
       return;
     }
 
@@ -37,17 +47,19 @@ const Login: React.FC = () => {
         .from("RegisterUser")
         .select("*")
         .eq("ID", username)
-        .eq("Password", password)
         .single();
 
       if (error) {
         console.error("Error al consultar la base de datos:", error.message);
+        setErrorMessage("Error al consultar la base de datos"); // Establecer el mensaje de error específico
+        setShowError(true);
         return;
       }
 
-      if (!data) {
+      if (!data || data.Password !== password) {
         console.error("Credenciales incorrectas");
-        setShowError(true); // Mostrar mensaje de error si las credenciales son incorrectas
+        setErrorMessage("Credenciales incorrectas"); // Establecer el mensaje de error específico
+        setShowError(true);
         return;
       }
 
@@ -55,6 +67,8 @@ const Login: React.FC = () => {
       history.push("/home");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      setErrorMessage("Error al iniciar sesión"); // Establecer el mensaje de error específico
+      setShowError(true);
     }
   };
 
@@ -70,19 +84,17 @@ const Login: React.FC = () => {
   return (
     <IonCard className="login-card"> {/* Aplica la clase de estilo al componente IonCard */}
       <IonCardHeader>
-        <img src= {logo} className="logo-img" /> {/* Agrega la imagen en la esquina superior izquierda */}
-        <IonCardTitle  className="TitleWP" >WorkPlanner</IonCardTitle>
+        <img src={logo} className="logo-img" /> {/* Agrega la imagen en la esquina superior izquierda */}
+        <IonCardTitle className="TitleWP">WorkPlanner</IonCardTitle>
       </IonCardHeader>
-      <div className="LogoPerfil">
-      <img src="src/img/perfil1.png"/> {/* Agrega la imagen en la esquina superior izquierda */}
-      </div>
-      <IonCardContent  className="scrollable-content">
+      <IonCardContent className="scrollable-content">
         <div className="input-container">
           <div>ID</div>
           <IonInput
             placeholder="Ingrese su ID"
             value={username}
             onIonChange={(e) => setUsername(e.detail.value!)}
+            onBlur={() => setUserInteracted(true)} // Establecer que el usuario ha interactuado con el campo de entrada al perder el foco
           />
         </div>
         <div className="input-container">
@@ -92,6 +104,7 @@ const Login: React.FC = () => {
             placeholder="Ingrese su contraseña"
             value={password}
             onIonChange={(e) => setPassword(e.detail.value!)}
+            onBlur={() => setUserInteracted(true)} // Establecer que el usuario ha interactuado con el campo de entrada al perder el foco
           />
         </div>
 
@@ -103,16 +116,15 @@ const Login: React.FC = () => {
           Registrarse
         </IonButton>
 
-        <IonButton className="forgot-button" expand="full" onClick={handleForgotPassword}>
+        <IonButton className="oval-button" expand="full" onClick={handleForgotPassword}>
           ¿Olvidaste tu contraseña?
         </IonButton>
 
-        {/* Alerta para mostrar el mensaje de error */}
         <IonAlert
           isOpen={showError}
           onDidDismiss={() => setShowError(false)}
           header={'Error'}
-          message={'Ha ingresado el usuario o contraseña incorrectos'}
+          message={errorMessage} 
           buttons={['OK']}
         />
       </IonCardContent>

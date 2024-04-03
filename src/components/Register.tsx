@@ -14,6 +14,7 @@ import {
 } from '@ionic/react';
 import { createClient } from '@supabase/supabase-js';
 
+
 // Configuración de Supabase
 const supabaseUrl = "https://gzaimljsjrzcamhdwwjr.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6YWltbGpzanJ6Y2FtaGR3d2pyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMDgwOTAzOSwiZXhwIjoyMDI2Mzg1MDM5fQ.7Gik0B0Sj0oQrU-UNYkH8RhSUO66CCEifQPowlVuVfU";
@@ -42,7 +43,7 @@ const Register: React.FC = () => {
           {
             FirstName: firstName,
             LastName: lastName,
-            Email: email, // Corregido: Utilizar 'Email' en lugar de 'EMail'
+            Email: email, 
             ID: id,
             Password: password,
             Date: birthdate,
@@ -59,12 +60,13 @@ const Register: React.FC = () => {
       console.error("Error al registrar al usuario:", error);
     }
   };
-
+  const handleAtras = () => {
+    history.push("/login");
+  };
   return (
     <IonCard>
       <IonCardHeader>
-        <IonCardTitle>Registro</IonCardTitle>
-        <IonCardSubtitle>Crea una nueva cuenta</IonCardSubtitle>
+        <IonCardTitle>Crea una nueva cuenta</IonCardTitle>
       </IonCardHeader>
 
       <IonCardContent>
@@ -120,6 +122,7 @@ const Register: React.FC = () => {
           />
         </IonItem>
         <IonButton onClick={handleRegister}>Registrar</IonButton>
+        <IonButton onClick={handleAtras}>Atras</IonButton>
       </IonCardContent>
     </IonCard>
   );
