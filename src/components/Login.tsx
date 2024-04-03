@@ -13,6 +13,7 @@ import {
 import { createClient } from '@supabase/supabase-js';
 import './Login.css'; // Importa el archivo CSS para aplicar estilos personalizados
 import logo from '../img/Logo.png'; // Importa la imagen de tu logo
+import { Style } from '@capacitor/status-bar';
 
 const supabaseUrl = "https://gzaimljsjrzcamhdwwjr.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6YWltbGpzanJ6Y2FtaGR3d2pyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMDgwOTAzOSwiZXhwIjoyMDI2Mzg1MDM5fQ.7Gik0B0Sj0oQrU-UNYkH8RhSUO66CCEifQPowlVuVfU";
@@ -82,39 +83,40 @@ const Login: React.FC = () => {
   };
 
   return (
+    <div className='Padre'>
     <IonCard className="login-card"> {/* Aplica la clase de estilo al componente IonCard */}
       <IonCardHeader>
         <img src={logo} className="logo-img" /> {/* Agrega la imagen en la esquina superior izquierda */}
         <IonCardTitle className="TitleWP">WorkPlanner</IonCardTitle>
       </IonCardHeader>
-      <IonCardContent className="scrollable-content">
-        <div className="input-container">
-          <div>ID</div>
-          <IonInput
-            placeholder="Ingrese su ID"
+      <IonCardContent >
+        <div>
+          <div style={{textAlign:"center"}}>ID</div>
+          <IonInput className="input-container"
+            placeholder=""
             value={username}
             onIonChange={(e) => setUsername(e.detail.value!)}
             onBlur={() => setUserInteracted(true)} // Establecer que el usuario ha interactuado con el campo de entrada al perder el foco
           />
         </div>
-        <div className="input-container">
-          <div>Contraseña</div>
-          <IonInput
+        <div >
+          <div style={{textAlign:"center"}}>Contraseña</div>
+          <IonInput className="input-container"
             type="password"
-            placeholder="Ingrese su contraseña"
+            placeholder=""
             value={password}
             onIonChange={(e) => setPassword(e.detail.value!)}
             onBlur={() => setUserInteracted(true)} // Establecer que el usuario ha interactuado con el campo de entrada al perder el foco
           />
         </div>
-
         <IonButton className="oval-button" expand="full" onClick={handleLogin}>
           Iniciar Sesión
         </IonButton>
 
-        <IonButton className="oval-button" expand="full" onClick={handleRegister}>
-          Registrarse
+        <IonButton style={{ borderRadius: "10px" }} className="oval-button" expand="full" onClick={handleRegister}>
+         Registrarse
         </IonButton>
+
 
         <IonButton className="oval-button" expand="full" onClick={handleForgotPassword}>
           ¿Olvidaste tu contraseña?
@@ -129,6 +131,7 @@ const Login: React.FC = () => {
         />
       </IonCardContent>
     </IonCard>
+    </div>
   );
 };
 

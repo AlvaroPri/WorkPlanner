@@ -3,25 +3,17 @@
   overscroll-behavior-y: contain;
 }
 
-.scrollable-content {
-  max-height: calc(100vh - 5.625rem); /* 90 pixels / 16 pixels = 5.625 */
-  overflow-y: auto;
-  margin-top: 5.625rem; /* 90 pixels / 16 pixels = 5.625 */
-}
-
 .logo-img {
   width: 6.25rem; /* 100 pixels / 16 pixels = 6.25 */
   margin-bottom: 0.625rem; /* 10 pixels / 16 pixels = 0.625 */
 }
 
 .login-card {
-  background-color: #ffffff;
+  background-color: #0b3043;
   scroll-behavior: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;   /* Añade un relleno para mejorar el espacio entre elementos */
-
 }
 
 .input-container {
@@ -29,9 +21,9 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.25rem; /* 20 pixels / 16 pixels = 1.25 */
-  background-color: #fff;
-  width: 80%; /* Ajusta el ancho del contenedor de entrada */
-  max-width: 20rem; /* Limita el ancho máximo del contenedor de entrada */
+  background-color: #ffffff;
+  border-radius: 5rem;
+
 }
 
 .input-container div {
@@ -39,10 +31,9 @@
 }
 
 .oval-button {
-  border-radius: 1.25rem; /* 20 pixels / 16 pixels = 1.25 */
-  margin-bottom: 0.625rem; /* 10 pixels / 16 pixels = 0.625 */
-  width: 80%; /* Ajusta el ancho del botón */
-  max-width: 20rem; /* Limita el ancho máximo del botón */
+    border-radius: 10px;
+    border-right-width: 0px;
+    border-left-width: 0px;
 }
 
 .forgot-button {
@@ -78,4 +69,10 @@
   .LogoPerfil {
     margin-top: 8rem; /* Ajusta el margen superior para pantallas pequeñas */
   }
+}
+.Padre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
