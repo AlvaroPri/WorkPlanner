@@ -21,6 +21,7 @@ import {
   IonLabel,
   IonImg,
 } from "@ionic/react";
+import Complete from "./Complete";
 
 
 const Home: React.FC = () => {
@@ -39,6 +40,16 @@ const Home: React.FC = () => {
   const history = useHistory<any>();
   const handleAtras = () => {
     history.push("/login");
+  };
+
+  const Progress = () => {
+    history.push("/InProgress");
+  };
+  const Complete = () => {
+    history.push("/Complete");
+  };
+  const Pending = () => {
+    history.push("/PendingTask");
   };
 
   return (
@@ -69,13 +80,13 @@ const Home: React.FC = () => {
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
             <IonItem className="menu-item">
-              <IonLabel>In Progress</IonLabel>
+              <IonLabel onClick={Progress}>In Progress</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonLabel>Complete</IonLabel>
+              <IonLabel onClick={Complete}>Complete</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonLabel>Pending Task</IonLabel>
+              <IonLabel onClick={Pending}>Pending Task</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
               <IonButton className="AtrasButtom" onClick={handleAtras}>Atras</IonButton>

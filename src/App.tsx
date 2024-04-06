@@ -21,6 +21,10 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
+import InProgress from './pages/InProgress';
+import Complete from './pages/Complete';
+
+
 
 setupIonicReact();
 
@@ -42,6 +46,14 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/">
           <Redirect to="/login" />
+        </Route>
+
+        <Route exact path="/InProgress"> 
+          <InProgress />
+        </Route>
+
+        <Route exact path="/Complete"> 
+          <Complete />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
