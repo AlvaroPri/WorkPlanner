@@ -4,7 +4,6 @@
 }
 
 .logo-img {
-  width: 6.25rem; /* 100 pixels / 16 pixels = 6.25 */
   margin-bottom: 0.625rem; /* 10 pixels / 16 pixels = 0.625 */
 }
 
@@ -41,11 +40,14 @@
 }
 
 .TitleWP {
-  margin-left: 3.125rem; /* 50 pixels / 16 pixels = 3.125 */
   color: #fc4f00;
   font-size: 1.4375rem; /* 23 pixels / 16 pixels = 1.4375 */
 }
 
+.TextIdPass{
+text-align: center;
+color: #ffffff;
+}
 .LogoPerfil {
   text-align: center;
   margin-top: 12.5rem; /* 200 pixels / 16 pixels = 12.5 */
@@ -70,6 +72,7 @@
     margin-top: 8rem; /* Ajusta el margen superior para pantallas pequeñas */
   }
 }
+
 .Padre {
   display: flex;
   justify-content: center;

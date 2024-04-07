@@ -69,7 +69,7 @@
 
 /* Estilos para el título "Projects" en el header */
 .projects-title {
-  margin: 0;
+  margin: 0.25rem;
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -198,25 +198,26 @@
 
 
 
-  .centered-button-container {
+.centered-button-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 0%;
-  }
+}
   
-  .centered-button {
+.centered-button {
     text-align: center;
-  }
+}
   
-  .bottom-button {
+.bottom-button {
     width: 60px; /* Ancho del botón */
     height: 60px; /* Altura del botón */
     font-size: 24px; /* Tamaño de la fuente del botón */
-  }
-  .AtrasButtom{
+}
+
+.AtrasButtom{
     align-items: center;
     text-align: center;
     height: 45px;
     width: 350px;
-  }
+}

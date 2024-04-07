@@ -5,13 +5,14 @@ import "react-datepicker/dist/react-datepicker.css"; // Estilos de react-datepic
 import "react-calendar/dist/Calendar.css"; // Estilos de react-calendar
 import Calendar from "react-calendar"; // Importa react-calendar
 import logo from "../img/Logo.png";
+import { IonButton, IonIcon } from '@ionic/react';
+import { appsOutline } from 'ionicons/icons';
+
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonToolbar,
-  IonButton,
-  IonIcon,
   IonCard,
   IonCardHeader,
   IonCardContent,
@@ -70,8 +71,8 @@ const Home: React.FC = () => {
             {/* Título "Projects" */}
             <IonTitle className="projects-title">Projects</IonTitle>
           </div>
-          <IonButton slot="end" onClick={toggleMenu}>
-            <IonIcon name={menuOpen ? "close-circle" : "menu"} />
+          <IonButton slot="end" onClick={toggleMenu }>
+            <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
@@ -89,7 +90,7 @@ const Home: React.FC = () => {
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonButton className="AtrasButtom" onClick={handleAtras}>Atras</IonButton>
+              <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>
             </IonItem>
           </IonList>
         </div>

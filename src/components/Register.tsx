@@ -4,21 +4,15 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
   IonItem,
+  IonAlert,
   IonInput,
-  IonLabel,
-  IonButton,
   IonDatetime,
 } from '@ionic/react';
-import { createClient } from '@supabase/supabase-js';
-
-
-// Configuración de Supabase
-const supabaseUrl = "https://gzaimljsjrzcamhdwwjr.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6YWltbGpzanJ6Y2FtaGR3d2pyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMDgwOTAzOSwiZXhwIjoyMDI2Mzg1MDM5fQ.7Gik0B0Sj0oQrU-UNYkH8RhSUO66CCEifQPowlVuVfU";
-const supabase = createClient(supabaseUrl, supabaseKey);
+import supabase from '../components/SupabaseClient';
+import { IonButton, IonIcon } from '@ionic/react';
+import { arrowBackOutline  } from 'ionicons/icons';
 
 const Register: React.FC = () => {
   const [firstName, setFirstName] = useState<string>('');
@@ -27,104 +21,131 @@ const Register: React.FC = () => {
   const [id, setID] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
-
+  const [showError, setShowError] = useState<boolean>(false);
   const history = useHistory<any>();
 
   const handleRegister = async () => {
     if (!firstName || !lastName || !email || !password || !birthdate) {
-      console.error("Error: los campos no pueden estar vacíos");
+      console.error('Error: los campos no pueden estar vacíos');
       return;
     }
 
     try {
+      // Obtener la fecha y hora actual del sistema
+      const currentDate = new Date();
+      const dateRegister = currentDate.toISOString(); // Convertir a formato ISO 8601
+
       const { data, error } = await supabase
-        .from("RegisterUser")
+        .from('RegisterUser')
+        .select('*')
+        .eq('ID', id.toString());
+
+      if (data && data.length > 0) {
+        setShowError(true);
+        return;
+      }
+
+      const { error: insertError } = await supabase
+        .from('RegisterUser')
         .insert([
           {
             FirstName: firstName,
             LastName: lastName,
-            Email: email, 
+            Email: email,
             ID: id,
             Password: password,
             Date: birthdate,
+            Date_Register: dateRegister, // Incluir la fecha y hora de registro
           },
         ]);
 
-      if (error) {
-        console.error("Error al insertar los datos:", error.message);
+      if (insertError) {
+        console.error('Error al insertar los datos:', insertError.message);
         return;
       }
 
-      history.push("/login");
+      history.push('/login');
     } catch (error) {
-      console.error("Error al registrar al usuario:", error);
+      console.error('Error al registrar al usuario:', error);
     }
   };
-  const handleAtras = () => {
-    history.push("/login");
-  };
-  return (
-    <IonCard>
-      <IonCardHeader>
-        <IonCardTitle>Crea una nueva cuenta</IonCardTitle>
-      </IonCardHeader>
 
-      <IonCardContent>
-        <IonItem>
-          <IonLabel>Nombre:</IonLabel>
-          <IonInput
-            placeholder="Nombre"
-            value={firstName}
-            onIonChange={(e) => setFirstName(e.detail.value!)}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Apellido:</IonLabel>
-          <IonInput
-            placeholder="Apellido"
-            value={lastName}
-            onIonChange={(e) => setLastName(e.detail.value!)}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>E-Mail:</IonLabel>
-          <IonInput
-            type="email"
-            placeholder="email@example.com"
-            value={email}
-            onIonChange={(e) => setEmail(e.detail.value!)}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>ID:</IonLabel>
-          <IonInput
-            type="number"
-            placeholder="ID"
-            value={id}
-            onIonChange={(e) => setID(Number(e.detail.value!))}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Contraseña:</IonLabel>
-          <IonInput
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onIonChange={(e) => setPassword(e.detail.value!)}
-          />
-        </IonItem>
-        <IonItem>
-          <IonLabel>Fecha de Nacimiento:</IonLabel>
-          <IonDatetime
-            placeholder="Fecha de Nacimiento"
-            value={birthdate}
-            onIonChange={(e) => setBirthdate(e.detail.value!)}
-          />
-        </IonItem>
-        <IonButton onClick={handleRegister}>Registrar</IonButton>
-        <IonButton onClick={handleAtras}>Atras</IonButton>
-      </IonCardContent>
-    </IonCard>
+  const handleAtras = () => {
+    history.push('/login');
+  };
+
+  return (
+    <div className="ContenedorPadre">
+      <IonCard>
+          <IonCardHeader>
+            <IonButton onClick={handleAtras} slot="start">
+             <IonIcon slot="icon-only" icon={arrowBackOutline} />
+             </IonButton>
+             <IonCardTitle>Crea una nueva cuenta</IonCardTitle>
+          </IonCardHeader>
+        <IonCardContent>
+          <IonItem>
+            <IonInput
+              placeholder="Nombre"
+              value={firstName}
+              onIonChange={(e) => setFirstName(e.detail.value!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonInput
+              placeholder="Apellido"
+              value={lastName}
+              onIonChange={(e) => setLastName(e.detail.value!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonInput
+              type="email"
+              placeholder="E-Mail"
+              value={email}
+              onIonChange={(e) => setEmail(e.detail.value!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonInput
+              type="text"
+              placeholder="ID"
+              value={id === 0 ? '' : id.toString()}
+              onIonChange={(e) => setID(Number(e.detail.value!))}
+            />
+          </IonItem>
+          <IonItem>
+            <IonInput
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onIonChange={(e) => setPassword(e.detail.value!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonDatetime
+              displayFormat="YYYY-MM-DD"
+              placeholder="Fecha de Nacimiento"
+              value={birthdate}
+              onIonChange={(e) => setBirthdate(e.detail.value!)}
+            />
+          </IonItem>
+
+          <IonButton expand="full" onClick={handleRegister}>Registrar</IonButton>
+          <IonButton expand="full" onClick={handleAtras}>
+            <IonIcon slot="icon-only" icon={arrowBackOutline} />
+          </IonButton>
+        </IonCardContent>
+      </IonCard>
+
+      <IonAlert
+        isOpen={showError}
+        onDidDismiss={() => setShowError(false)}
+        header={'Error'}
+        message={'El usuario ya está registrado.'}
+        buttons={['OK']}
+      />
+    </div>
   );
 };
 
