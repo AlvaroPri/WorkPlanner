@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
+import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
   IonHeader,
@@ -15,9 +16,12 @@ import {
   IonCardContent,
   IonTitle,
   IonImg,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonButton,
 } from "@ionic/react";
 
-// Definimos una interfaz para la estructura de las actividades
 interface Activity {
   id: number;
   title: string;
@@ -43,6 +47,14 @@ const Complete: React.FC = () => {
     history.push("/login");
   };
 
+  const Progress = () => {
+    history.push("/InProgress");
+  };
+
+  const Pending = () => {
+    history.push("/PendingTask");
+  };
+
   // Datos de ejemplo para las actividades completadas
   const completedActivities: Activity[] = [
     { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
@@ -54,34 +66,50 @@ const Complete: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="logo-title-container">
+    {/* Contenedor del logo y "WorkPlanner" */}
+    <div className="logo-title-container">
+            {/* Logo */}
             <IonImg src={logo} className="logo" />
+
+            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
+
+          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
+            {/* Título "Projects" */}
             <IonTitle className="projects-title">Complete</IonTitle>
           </div>
-          <IonIcon icon={menuOpen ? "close-circle" : "menu"} onClick={toggleMenu} slot="end" />
+          
+          <IonButton slot="end" onClick={toggleMenu }>
+            <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
+          </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
         <div className={`menu ${menuOpen ? "open" : ""}`}>
-          <IonCard>
-            <IonCardContent>
-              <IonTitle>In Progress</IonTitle>
-              <IonTitle>Complete</IonTitle>
-              <IonTitle>SAPO</IonTitle>
-              <IonIcon icon="arrow-back" onClick={handleAtras} />
-            </IonCardContent>
-          </IonCard>
+          <IonList className="menu-list">
+            <IonItem className="menu-item">
+              <IonLabel onClick={Progress}>In Progress</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Complete}>Complete</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Pending}>Pending Task</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonButton onClick={handleAtras}>Log Out</IonButton>
+            </IonItem>
+          </IonList>
         </div>
 
         <IonCard className="activities-card">
           <IonCardContent>
             {completedActivities.map((activity: Activity) => (
               <div key={activity.id} className="activity-item">
-                <IonIcon icon="checkmark-circle" className="activity-icon" />
+                <IonImg src={logo} className="activity-icon" />
                 <div className="activity-content">
                   <IonTitle>{activity.title}</IonTitle>
                   <p>{activity.description}</p>
@@ -100,9 +128,12 @@ const Complete: React.FC = () => {
 
         <div className="centered-button-container">
           <div className="centered-button">
-            <IonIcon icon="add-circle" className="bottom-icon" />
+            <IonButton shape="round" className="bottom-button">
+              +
+            </IonButton>
           </div>
         </div>
+
       </IonContent>
     </IonPage>
   );

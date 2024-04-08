@@ -23,6 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import InProgress from './pages/InProgress';
 import Complete from './pages/Complete';
+import PendingTask from './pages/PendingTask';
 
 
 
@@ -44,8 +45,13 @@ const App: React.FC = () => (
         <Route exact path="/home">
           <Home />
         </Route>
-        <Route exact path="/">
-          <Redirect to="/login" />
+
+        <Route exact path="/PendingTask">
+          <PendingTask />
+        </Route>
+
+        <Route exact path="/login">
+        <Login />
         </Route>
 
         <Route exact path="/InProgress"> 
@@ -55,6 +61,7 @@ const App: React.FC = () => (
         <Route exact path="/Complete"> 
           <Complete />
         </Route>
+
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

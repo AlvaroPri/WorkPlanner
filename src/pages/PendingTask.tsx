@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import "./PendingTask.css"; 
+import "./PendingTask.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
+import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
   IonHeader,
@@ -15,10 +16,13 @@ import {
   IonCardContent,
   IonTitle,
   IonImg,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonButton,
 } from "@ionic/react";
 
-// Definimos una interfaz para la estructura de las tareas pendientes
-interface Task {
+interface Activity {
   id: number;
   title: string;
   description: string;
@@ -43,48 +47,77 @@ const PendingTask: React.FC = () => {
     history.push("/login");
   };
 
-  // Datos de ejemplo para las tareas pendientes
-  const pendingTasks: Task[] = [
-    { id: 1, title: "Tarea Pendiente 1", description: "Descripción de la tarea pendiente 1" },
-    { id: 2, title: "Tarea Pendiente 2", description: "Descripción de la tarea pendiente 2" },
-    { id: 3, title: "Tarea Pendiente 3", description: "Descripción de la tarea pendiente 3" },
+  const Progress = () => {
+    history.push("/InProgress");
+  };
+
+  const Pending = () => {
+    history.push("/PendingTask");
+  };
+
+  const Complete = () => {
+    history.push("/Complete");
+  };
+
+
+  // Datos de ejemplo para las actividades completadas
+  const completedActivities: Activity[] = [
+    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
+    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
+    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
   ];
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className="logo-title-container">
+    {/* Contenedor del logo y "WorkPlanner" */}
+    <div className="logo-title-container">
+            {/* Logo */}
             <IonImg src={logo} className="logo" />
+
+            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
+
+          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
-            <IonTitle className="projects-title">Pending Tasks</IonTitle>
+            {/* Título "Projects" */}
+            <IonTitle className="projects-title">Pending Task</IonTitle>
           </div>
-          <IonIcon icon={menuOpen ? "close-circle" : "menu"} onClick={toggleMenu} slot="end" />
+          
+          <IonButton slot="end" onClick={toggleMenu }>
+            <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
+          </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
         <div className={`menu ${menuOpen ? "open" : ""}`}>
-          <IonCard>
-            <IonCardContent>
-              <IonTitle>In Progress</IonTitle>
-              <IonTitle>Complete</IonTitle>
-              <IonTitle>SAPO</IonTitle>
-              <IonIcon icon="arrow-back" onClick={handleAtras} />
-            </IonCardContent>
-          </IonCard>
+          <IonList className="menu-list">
+            <IonItem className="menu-item">
+              <IonLabel onClick={Progress}>In Progress</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Complete}>Complete</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Pending}>Pending Task</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>
+            </IonItem>
+          </IonList>
         </div>
 
-        <IonCard className="tasks-card">
+        <IonCard className="activities-card">
           <IonCardContent>
-            {pendingTasks.map((task: Task) => (
-              <div key={task.id} className="task-item">
-                <IonIcon icon="alert-circle" className="task-icon" />
-                <div className="task-content">
-                  <IonTitle>{task.title}</IonTitle>
-                  <p>{task.description}</p>
+            {completedActivities.map((activity: Activity) => (
+              <div key={activity.id} className="activity-item">
+                <IonImg src={logo} className="activity-icon" />
+                <div className="activity-content">
+                  <IonTitle>{activity.title}</IonTitle>
+                  <p>{activity.description}</p>
                 </div>
               </div>
             ))}
@@ -100,7 +133,9 @@ const PendingTask: React.FC = () => {
 
         <div className="centered-button-container">
           <div className="centered-button">
-            <IonIcon icon="add-circle" className="bottom-icon" />
+            <IonButton shape="round" className="bottom-button">
+              +
+            </IonButton>
           </div>
         </div>
       </IonContent>

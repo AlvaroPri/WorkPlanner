@@ -22,7 +22,7 @@ import {
   IonLabel,
   IonImg,
 } from "@ionic/react";
-import Complete from "./Complete";
+
 
 
 const Home: React.FC = () => {
@@ -71,6 +71,7 @@ const Home: React.FC = () => {
             {/* Título "Projects" */}
             <IonTitle className="projects-title">Projects</IonTitle>
           </div>
+          
           <IonButton slot="end" onClick={toggleMenu }>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
