@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import "./Home.css";
-import "react-datepicker/dist/react-datepicker.css"; // Estilos de react-datepicker
-import "react-calendar/dist/Calendar.css"; // Estilos de react-calendar
-import Calendar from "react-calendar"; // Importa react-calendar
+import "react-datepicker/dist/react-datepicker.css";
+import "react-calendar/dist/Calendar.css";
+import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonInput } from '@ionic/react';
 import { appsOutline } from 'ionicons/icons';
 
 import {
@@ -23,14 +23,23 @@ import {
   IonImg,
 } from "@ionic/react";
 
-
+interface Activity {
+  id: number;
+  title: string;
+  description: string;
+  assignee: string;
+}
 
 const Home: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
-
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [assignee, setAssignee] = useState("");
+  const [activities, setActivities] = useState<Activity[]>([]);
+  
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -38,6 +47,7 @@ const Home: React.FC = () => {
   const handleDateChange = (value: Date | Date[] | null) => {
     setSelectedDate(value);
   };
+  
   const history = useHistory<any>();
   const handleAtras = () => {
     history.push("/login");
@@ -46,33 +56,40 @@ const Home: React.FC = () => {
   const Progress = () => {
     history.push("/InProgress");
   };
+
   const Complete = () => {
     history.push("/Complete");
   };
+
   const Pending = () => {
     history.push("/PendingTask");
+  };
+
+  const handleAddActivity = () => {
+    const newActivity: Activity = {
+      id: activities.length + 1,
+      title: title,
+      description: description,
+      assignee: assignee
+    };
+    setActivities([...activities, newActivity]);
+    setTitle("");
+    setDescription("");
+    setAssignee("");
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-            {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
-            {/* Logo */}
             <IonImg src={logo} className="logo" />
-
-            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
-
-          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
-            {/* Título "Projects" */}
             <IonTitle className="projects-title">Projects</IonTitle>
           </div>
-          
-          <IonButton slot="end" onClick={toggleMenu }>
+          <IonButton slot="end" onClick={toggleMenu}>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
@@ -81,39 +98,59 @@ const Home: React.FC = () => {
       <IonContent fullscreen>
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
-            <IonItem className="menu-item">
-              <IonLabel onClick={Progress}>In Progress</IonLabel>
+            <IonItem className="menu-item" onClick={Progress}>
+              <IonLabel>In Progress</IonLabel>
             </IonItem>
-            <IonItem className="menu-item">
-              <IonLabel onClick={Complete}>Complete</IonLabel>
+            <IonItem className="menu-item" onClick={Complete}>
+              <IonLabel>Complete</IonLabel>
             </IonItem>
-            <IonItem className="menu-item">
-              <IonLabel onClick={Pending}>Pending Task</IonLabel>
+            <IonItem className="menu-item" onClick={Pending}>
+              <IonLabel>Pending Task</IonLabel>
             </IonItem>
-            <IonItem className="menu-item">
-              <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>
+            <IonItem className="menu-item" onClick={handleAtras}>
+              <IonLabel>Log Out</IonLabel>
             </IonItem>
           </IonList>
         </div>
 
-        {/*Tarjetas de actividades */}
-        <IonCard className="card">
-          <IonCardHeader>
-            <IonTitle>Card 1</IonTitle>
-          </IonCardHeader>
-          <IonCardContent>Content of Card 1</IonCardContent>
-        </IonCard>
-        <IonCard className="card">
-          <IonCardHeader>
-            <IonTitle>Card 2</IonTitle>
-          </IonCardHeader>
-          <IonCardContent>Content of Card 2</IonCardContent>
-        </IonCard>
-        <IonCard className="card">
-          <IonCardHeader>
-            <IonTitle>Card 3</IonTitle>
-          </IonCardHeader>
-          <IonCardContent>Content of Card 3</IonCardContent>
+        {/* Tarjetas de actividades */}
+        <div className="card-container">
+          {activities.map((activity: Activity) => (
+            <IonCard key={activity.id} className="card">
+              <IonCardHeader>
+                <IonTitle>{activity.title}</IonTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>{activity.description}</p>
+                <p>Assignee: {activity.assignee}</p>
+              </IonCardContent>
+            </IonCard>
+          ))}
+        </div>
+
+        {/* Formulario para añadir actividad */}
+        <IonCard className="add-activity-card">
+          <IonCardContent>
+            <IonItem>
+              <IonLabel position="floating">Title</IonLabel>
+              <IonInput value={title} onIonChange={(e) => setTitle(e.detail.value!)} />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="floating">Description</IonLabel>
+              <IonInput value={description} onIonChange={(e) => setDescription(e.detail.value!)} />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="floating">Assignee</IonLabel>
+              <IonInput value={assignee} onIonChange={(e) => setAssignee(e.detail.value!)} />
+            </IonItem>
+          </IonCardContent>
+          <div className="centered-button-container">
+            <div className="centered-button">
+              <IonButton shape="round" className="bottom-button" onClick={handleAddActivity}>
+                +
+              </IonButton>
+            </div>
+          </div>
         </IonCard>
 
         {/* Calendario */}
@@ -122,14 +159,6 @@ const Home: React.FC = () => {
             onChange={handleDateChange}
             value={selectedDate as Date | Date[] | null}
           />
-        </div>
-
-        <div className="centered-button-container">
-          <div className="centered-button">
-            <IonButton shape="round" className="bottom-button">
-              +
-            </IonButton>
-          </div>
         </div>
       </IonContent>
     </IonPage>

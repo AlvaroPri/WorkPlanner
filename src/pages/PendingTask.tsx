@@ -71,8 +71,8 @@ const PendingTask: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
+          {/* Contenedor del logo y "WorkPlanner" */}
+          <div className="logo-title-container">
             {/* Logo */}
             <IonImg src={logo} className="logo" />
 
@@ -114,7 +114,10 @@ const PendingTask: React.FC = () => {
           <IonCardContent>
             {completedActivities.map((activity: Activity) => (
               <div key={activity.id} className="activity-item">
-                <IonImg src={logo} className="activity-icon" />
+                {/* Envolver la imagen con IonButton y aplicar un estilo para eliminar fondo y borde */}
+                <IonButton onClick={() => history.push("/Complete")} className="image-button">
+                  <IonImg src={logo} className="activity-icon" />
+                </IonButton>
                 <div className="activity-content">
                   <IonTitle>{activity.title}</IonTitle>
                   <p>{activity.description}</p>

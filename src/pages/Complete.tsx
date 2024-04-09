@@ -20,6 +20,7 @@ import {
   IonItem,
   IonList,
   IonButton,
+  IonInput
 } from "@ionic/react";
 
 interface Activity {
@@ -33,6 +34,14 @@ const Complete: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
+  const [showInputFields, setShowInputFields] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [completedActivities, setCompletedActivities] = useState<Activity[]>([
+    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
+    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
+    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
+  ]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -55,32 +64,33 @@ const Complete: React.FC = () => {
     history.push("/PendingTask");
   };
 
-  // Datos de ejemplo para las actividades completadas
-  const completedActivities: Activity[] = [
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ];
+  const handleAddTask = () => {
+    setShowInputFields(true);
+  };
+
+  const saveTask = () => {
+    const newTask: Activity = {
+      id: completedActivities.length + 1,
+      title: title,
+      description: description
+    };
+    setCompletedActivities([...completedActivities, newTask]);
+    setShowInputFields(false);
+    setTitle("");
+    setDescription("");
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
-            {/* Logo */}
+          <div className="logo-title-container">
             <IonImg src={logo} className="logo" />
-
-            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
-
-          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
-            {/* Título "Projects" */}
             <IonTitle className="projects-title">Complete</IonTitle>
           </div>
-          
           <IonButton slot="end" onClick={toggleMenu }>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
@@ -92,9 +102,6 @@ const Complete: React.FC = () => {
           <IonList className="menu-list">
             <IonItem className="menu-item">
               <IonLabel onClick={Progress}>In Progress</IonLabel>
-            </IonItem>
-            <IonItem className="menu-item">
-              <IonLabel onClick={Complete}>Complete</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
@@ -128,11 +135,25 @@ const Complete: React.FC = () => {
 
         <div className="centered-button-container">
           <div className="centered-button">
-            <IonButton shape="round" className="bottom-button">
+            <IonButton shape="round" className="bottom-button" onClick={handleAddTask}>
               +
             </IonButton>
           </div>
         </div>
+
+        {showInputFields &&
+          <div>
+            <IonItem>
+              <IonLabel position="floating">Título</IonLabel>
+              <IonInput value={title} onIonChange={(e) => setTitle(e.detail.value!)}></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel position="floating">Descripción</IonLabel>
+              <IonInput value={description} onIonChange={(e) => setDescription(e.detail.value!)}></IonInput>
+            </IonItem>
+            <IonButton onClick={saveTask}>Guardar</IonButton>
+          </div>
+        }
 
       </IonContent>
     </IonPage>
