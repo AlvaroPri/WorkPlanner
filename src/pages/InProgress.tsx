@@ -29,6 +29,7 @@ interface Project {
   description: string;
   id_proyect: number;
   assigment_employee: number;
+  state: string;
 }
 
 const InProgress: React.FC = () => {
