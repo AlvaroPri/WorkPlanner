@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./InProgress.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,18 +21,20 @@ import {
   IonList,
   IonButton,
 } from "@ionic/react";
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
-interface Activity {
+interface Project {
   id: number;
-  title: string;
+  Title: string;
   description: string;
+  id_proyect: number;
+  assigment_employee: number;
 }
 
-const InProgrees: React.FC = () => {
+const InProgress: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
-    new Date()
-  );
+  const [projectsInProgress, setProjectsInProgress] = useState<Project[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(new Date());
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -50,28 +52,55 @@ const InProgrees: React.FC = () => {
   const Progress = () => {
     history.push("/InProgress");
   };
+  const Complete = () => {
+    history.push("/Complete");
+  };
 
   const Pending = () => {
     history.push("/PendingTask");
   };
 
-  const Complete = () => {
-    history.push("/Complete");
+  const handleComplete = (id_proyect: number) => {
+    // Enviar solicitud para marcar el proyecto como completo en la base de datos
+    supabase
+      .from<Project>("Proyects")
+      .update({ state: "Complete" })
+      .eq("id_proyect", id_proyect)
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error updating project state:", error.message);
+        } else {
+          // Actualizar el estado local después de completar con éxito la actualización en la base de datos
+          const updatedProjects = projectsInProgress.map(project =>
+            project.id_proyect === id_proyect ? { ...project, state: "Complete" } : project
+          );
+          setProjectsInProgress(updatedProjects);
+        }
+      });
   };
 
-  // Datos de ejemplo para las actividades completadas
-  const completedActivities: Activity[] = [
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ];
+  useEffect(() => {
+    // Consultar proyectos en progreso desde la base de datos utilizando Supabase
+    supabase
+      .from<Project>("Proyects")
+      .select("*")
+      .eq("state", "InProgress")
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching projects:", error.message);
+        } else {
+          setProjectsInProgress(data || []);
+        }
+      });
+  }, []);
 
   return (
     <IonPage>
+      {/* Encabezado */}
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
+          {/* Contenedor del logo y "WorkPlanner" */}
+          <div className="logo-title-container">
             {/* Logo */}
             <IonImg src={logo} className="logo" />
 
@@ -85,13 +114,14 @@ const InProgrees: React.FC = () => {
             <IonTitle className="projects-title">In Progress</IonTitle>
           </div>
           
-          <IonButton slot="end" onClick={toggleMenu }>
+          <IonButton slot="end" onClick={toggleMenu}>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
+        {/* Menú lateral */}
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
             <IonItem className="menu-item">
@@ -109,20 +139,24 @@ const InProgrees: React.FC = () => {
           </IonList>
         </div>
 
+        {/* Lista de proyectos en progreso */}
         <IonCard className="activities-card">
           <IonCardContent>
-            {completedActivities.map((activity: Activity) => (
-              <div key={activity.id} className="activity-item">
-               <IonImg src={logo} className="activity-icon" />
+            {projectsInProgress.map((project: Project) => (
+              <div key={project.id_proyect} className="activity-item">
+                <IonImg src={logo} className="activity-icon" />
                 <div className="activity-content">
-                  <IonTitle>{activity.title}</IonTitle>
-                  <p>{activity.description}</p>
+                  <IonTitle>{project.Title}</IonTitle>
+                  <p>{project.description}</p>
+                  <p>Tarea asignada a: {project.assigment_employee}</p>
+                  <IonButton onClick={() => handleComplete(project.id_proyect)}>Marcar como completo</IonButton>
                 </div>
               </div>
             ))}
           </IonCardContent>
         </IonCard>
 
+        {/* Calendario */}
         <div className="calendar-container">
           <Calendar
             onChange={handleDateChange}
@@ -130,6 +164,7 @@ const InProgrees: React.FC = () => {
           />
         </div>
         
+        {/* Botón flotante */}
         <div className="centered-button-container">
           <div className="centered-button">
             <IonButton shape="round" className="bottom-button">
@@ -142,4 +177,4 @@ const InProgrees: React.FC = () => {
   );
 };
 
-export default InProgrees;
+export default InProgress;

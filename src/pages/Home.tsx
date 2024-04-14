@@ -7,6 +7,7 @@ import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
 import { IonButton, IonIcon, IonInput } from '@ionic/react';
 import { appsOutline } from 'ionicons/icons';
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
 import {
   IonContent,
@@ -24,10 +25,12 @@ import {
 } from "@ionic/react";
 
 interface Activity {
-  id: number;
-  title: string;
+  id_proyect: number;
+  state: string;
+  id_admin: string;
   description: string;
-  assignee: string;
+  assigment_employee: string;
+  Title: string;
 }
 
 const Home: React.FC = () => {
@@ -35,10 +38,11 @@ const Home: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
-  const [title, setTitle] = useState("");
+  const [Title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [assignee, setAssignee] = useState("");
+  const [assigment_employee, setAssignee] = useState("");
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [id_admin, setIdAdmin] = useState(""); // Nuevo estado para el id_admin
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -65,17 +69,35 @@ const Home: React.FC = () => {
     history.push("/PendingTask");
   };
 
-  const handleAddActivity = () => {
+  const handleAddActivity = async () => {
     const newActivity: Activity = {
-      id: activities.length + 1,
-      title: title,
+      id_proyect: 4,
+      Title: Title,
       description: description,
-      assignee: assignee
+      assigment_employee: assigment_employee,
+      id_admin: id_admin, // Asignar el id_admin introducido por el usuario
+      state: "PendingTask" // Establecer el estado por defecto
     };
-    setActivities([...activities, newActivity]);
-    setTitle("");
-    setDescription("");
-    setAssignee("");
+
+    try {
+      const { data, error } = await supabase
+        .from('Proyects')
+        .insert([newActivity])
+        .select();
+      
+      if (error) {
+        console.error("Error adding activity to database:", error.message);
+      } else {
+        console.log("Activity added successfully:", data);
+        setActivities([...activities, newActivity]);
+        setTitle("");
+        setDescription("");
+        setAssignee("");
+        setIdAdmin(""); // Limpiar el id_admin después de la inserción
+      }
+    } catch (error) {
+      console.error("Error adding activity to database:", error.message);
+    }
   };
 
   return (
@@ -116,13 +138,13 @@ const Home: React.FC = () => {
         {/* Tarjetas de actividades */}
         <div className="card-container">
           {activities.map((activity: Activity) => (
-            <IonCard key={activity.id} className="card">
+            <IonCard key={activity.id_proyect} className="card">
               <IonCardHeader>
-                <IonTitle>{activity.title}</IonTitle>
+                <IonTitle>{activity.Title}</IonTitle>
               </IonCardHeader>
               <IonCardContent>
                 <p>{activity.description}</p>
-                <p>Assignee: {activity.assignee}</p>
+                <p>Assignee: {activity.assigment_employee}</p>
               </IonCardContent>
             </IonCard>
           ))}
@@ -133,7 +155,7 @@ const Home: React.FC = () => {
           <IonCardContent>
             <IonItem>
               <IonLabel position="floating">Title</IonLabel>
-              <IonInput value={title} onIonChange={(e) => setTitle(e.detail.value!)} />
+              <IonInput value={Title} onIonChange={(e) => setTitle(e.detail.value!)} />
             </IonItem>
             <IonItem>
               <IonLabel position="floating">Description</IonLabel>
@@ -141,7 +163,11 @@ const Home: React.FC = () => {
             </IonItem>
             <IonItem>
               <IonLabel position="floating">Assignee</IonLabel>
-              <IonInput value={assignee} onIonChange={(e) => setAssignee(e.detail.value!)} />
+              <IonInput value={assigment_employee} onIonChange={(e) => setAssignee(e.detail.value!)} />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="floating">Admin ID</IonLabel>
+              <IonInput value={id_admin} onIonChange={(e) => setIdAdmin(e.detail.value!)} />
             </IonItem>
           </IonCardContent>
           <div className="centered-button-container">

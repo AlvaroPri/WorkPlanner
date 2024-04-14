@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./Complete.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,11 +22,14 @@ import {
   IonButton,
   IonInput
 } from "@ionic/react";
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
-interface Activity {
+interface Project {
   id: number;
-  title: string;
+  Title: string;
   description: string;
+  id_proyect: number;
+  assigment_employee: number;
 }
 
 const Complete: React.FC = () => {
@@ -34,14 +37,7 @@ const Complete: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
-  const [showInputFields, setShowInputFields] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [completedActivities, setCompletedActivities] = useState<Activity[]>([
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ]);
+  const [completedProjects, setCompletedProjects] = useState<Project[]>([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -64,40 +60,49 @@ const Complete: React.FC = () => {
     history.push("/PendingTask");
   };
 
-  const handleAddTask = () => {
-    setShowInputFields(true);
-  };
-
-  const saveTask = () => {
-    const newTask: Activity = {
-      id: completedActivities.length + 1,
-      title: title,
-      description: description
-    };
-    setCompletedActivities([...completedActivities, newTask]);
-    setShowInputFields(false);
-    setTitle("");
-    setDescription("");
-  };
+  useEffect(() => {
+    // Consultar proyectos completados desde la base de datos utilizando Supabase
+    supabase
+      .from<Project>("Proyects")
+      .select("*")
+      .eq("state", "Complete")
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching completed projects:", error.message);
+        } else {
+          setCompletedProjects(data || []);
+        }
+      });
+  }, []);
 
   return (
     <IonPage>
+      {/* Encabezado */}
       <IonHeader>
         <IonToolbar>
+          {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
+            {/* Logo */}
             <IonImg src={logo} className="logo" />
+
+            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
+
+          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
+            {/* Título "Projects" */}
             <IonTitle className="projects-title">Complete</IonTitle>
           </div>
-          <IonButton slot="end" onClick={toggleMenu }>
+          
+          <IonButton slot="end" onClick={toggleMenu}>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
+        {/* Menú lateral */}
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
             <IonItem className="menu-item">
@@ -112,48 +117,29 @@ const Complete: React.FC = () => {
           </IonList>
         </div>
 
+        {/* Lista de proyectos completados */}
         <IonCard className="activities-card">
           <IonCardContent>
-            {completedActivities.map((activity: Activity) => (
-              <div key={activity.id} className="activity-item">
+            {completedProjects.map((project: Project) => (
+              <div key={project.id_proyect} className="activity-item">
                 <IonImg src={logo} className="activity-icon" />
                 <div className="activity-content">
-                  <IonTitle>{activity.title}</IonTitle>
-                  <p>{activity.description}</p>
+                  <IonTitle>{project.Title}</IonTitle>
+                  <p>{project.description}</p>
+                  <p>Tarea Completada por: {project.assigment_employee}</p>
                 </div>
               </div>
             ))}
           </IonCardContent>
         </IonCard>
 
+        {/* Calendario */}
         <div className="calendar-container">
           <Calendar
             onChange={handleDateChange}
             value={selectedDate as Date | Date[] | null}
           />
         </div>
-
-        <div className="centered-button-container">
-          <div className="centered-button">
-            <IonButton shape="round" className="bottom-button" onClick={handleAddTask}>
-              +
-            </IonButton>
-          </div>
-        </div>
-
-        {showInputFields &&
-          <div>
-            <IonItem>
-              <IonLabel position="floating">Título</IonLabel>
-              <IonInput value={title} onIonChange={(e) => setTitle(e.detail.value!)}></IonInput>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="floating">Descripción</IonLabel>
-              <IonInput value={description} onIonChange={(e) => setDescription(e.detail.value!)}></IonInput>
-            </IonItem>
-            <IonButton onClick={saveTask}>Guardar</IonButton>
-          </div>
-        }
 
       </IonContent>
     </IonPage>
