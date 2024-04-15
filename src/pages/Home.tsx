@@ -5,9 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
-import { IonButton, IonIcon, IonInput } from '@ionic/react';
+import { IonButton, IonIcon, IonInput, IonToast } from '@ionic/react'; // Agregamos IonToast para mostrar el mensaje
 import { appsOutline } from 'ionicons/icons';
-import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
+import supabase from "../components/SupabaseClient";
 
 import {
   IonContent,
@@ -42,7 +42,8 @@ const Home: React.FC = () => {
   const [description, setDescription] = useState("");
   const [assigment_employee, setAssignee] = useState("");
   const [activities, setActivities] = useState<Activity[]>([]);
-  const [id_admin, setIdAdmin] = useState(""); // Nuevo estado para el id_admin
+  const [id_admin, setIdAdmin] = useState("");
+  const [showToast, setShowToast] = useState(false); // Estado para controlar la visibilidad del mensaje de confirmación
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -57,14 +58,6 @@ const Home: React.FC = () => {
     history.push("/login");
   };
 
-  const Progress = () => {
-    history.push("/InProgress");
-  };
-
-  const Complete = () => {
-    history.push("/Complete");
-  };
-
   const Pending = () => {
     history.push("/PendingTask");
   };
@@ -75,8 +68,8 @@ const Home: React.FC = () => {
       Title: Title,
       description: description,
       assigment_employee: assigment_employee,
-      id_admin: id_admin, // Asignar el id_admin introducido por el usuario
-      state: "PendingTask" // Establecer el estado por defecto
+      id_admin: id_admin,
+      state: "PendingTask"
     };
 
     try {
@@ -93,7 +86,9 @@ const Home: React.FC = () => {
         setTitle("");
         setDescription("");
         setAssignee("");
-        setIdAdmin(""); // Limpiar el id_admin después de la inserción
+        setIdAdmin("");
+        setShowToast(true); // Mostrar el mensaje de confirmación
+        Pending(); // Redirigir a la página de tareas pendientes después de agregar la actividad
       }
     } catch (error) {
       console.error("Error adding activity to database:", error.message);
@@ -178,6 +173,13 @@ const Home: React.FC = () => {
             </div>
           </div>
         </IonCard>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message="La información ha sido guardada correctamente y ahora forma parte de las tareas pendientes."
+          duration={4000}
+        />
+    
 
         {/* Calendario */}
         <div className="calendar-container">
