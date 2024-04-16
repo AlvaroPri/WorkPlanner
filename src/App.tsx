@@ -26,7 +26,12 @@ import './theme/variables.css';
 import InProgress from './pages/InProgress';
 import Complete from './pages/Complete';
 import PendingTask from './pages/PendingTask';
+
+/*paginas de usuarios*/
 import U_InProgress from './pages/U_InProgress';
+import U_Complete from './pages/U_complete';
+import U_PendingTask from './pages/U_PendingTask';
+import U_Home from './pages/U_Home';
 
 /* Configuración de Ionic React */
 setupIonicReact();
@@ -56,10 +61,26 @@ const App: React.FC = () => (
         <Route exact path="/Complete"> 
           <Complete />
         </Route>
+
+
         {/* Rutas para usuario */}
-        <Route exact path="/U_InProgress">
+        <Route exact path="/user/U_InProgress">
           <U_InProgress />
         </Route>
+
+        <Route exact path="/user/U_PendinTask">
+          <U_PendingTask />
+        </Route>
+
+        <Route exact path="/U_Complete">
+          <U_Complete />
+        </Route>
+
+        <Route exact path="/U_Home">
+          <U_Home />
+        </Route>
+
+
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

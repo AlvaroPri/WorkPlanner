@@ -1,0 +1,18 @@
+.activities-card {
+    margin: 20px;
+  }
+  
+  .activity-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .activity-icon {
+    margin-right: 10px;
+  }
+  
+  .bottom-icon {
+    font-size: 32px;
+  }
+  

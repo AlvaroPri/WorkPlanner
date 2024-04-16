@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
-import "./U_PendingTask.css";
+import "./U_Complete.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
@@ -20,19 +20,24 @@ import {
   IonItem,
   IonList,
   IonButton,
+  IonInput
 } from "@ionic/react";
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
-interface Activity {
+interface Project {
   id: number;
-  title: string;
+  Title: string;
   description: string;
+  id_proyect: number;
+  assigment_employee: number;
 }
 
-const U_PendingTask: React.FC = () => {
+const U_Complete: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
+  const [completedProjects, setCompletedProjects] = useState<Project[]>([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -55,24 +60,28 @@ const U_PendingTask: React.FC = () => {
     history.push("/U_PendingTask");
   };
 
-  const Complete = () => {
-    history.push("/U_Complete");
-  };
-
-
-  // Datos de ejemplo para las actividades completadas
-  const completedActivities: Activity[] = [
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ];
+  useEffect(() => {
+    // Consultar proyectos completados desde la base de datos utilizando Supabase
+    supabase
+      .from<Project>("Proyects")
+      .select("*")
+      .eq("state", "Complete")
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching completed projects:", error.message);
+        } else {
+          setCompletedProjects(data || []);
+        }
+      });
+  }, []);
 
   return (
     <IonPage>
+      {/* Encabezado */}
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
+          {/* Contenedor del logo y "WorkPlanner" */}
+          <div className="logo-title-container">
             {/* Logo */}
             <IonImg src={logo} className="logo" />
 
@@ -83,51 +92,48 @@ const U_PendingTask: React.FC = () => {
           {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
             {/* Título "Projects" */}
-            <IonTitle className="projects-title">Pending Task</IonTitle>
+            <IonTitle className="projects-title">Complete</IonTitle>
           </div>
           
-          <IonButton slot="end" onClick={toggleMenu }>
+          <IonButton slot="end" onClick={toggleMenu}>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
+        {/* Menú lateral */}
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
             <IonItem className="menu-item">
               <IonLabel onClick={Progress}>In Progress</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonLabel onClick={Complete}>Complete</IonLabel>
-            </IonItem>
-            <IonItem className="menu-item">
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>
+              <IonButton onClick={handleAtras}>Log Out</IonButton>
             </IonItem>
           </IonList>
         </div>
 
+        {/* Lista de proyectos completados */}
         <IonCard className="activities-card">
-  <IonCardContent>
-    {completedActivities.map((activity: Activity) => (
-      <div key={activity.id} className="activity-item">
-        {/* Envolver la imagen con IonButton y aplicar un estilo para eliminar fondo y borde */}
-        <IonButton onClick={() => history.push("/Complete")} className="image-button">
-  <IonImg src={logo} className="activity-icon" />
-</IonButton>
+          <IonCardContent>
+            {completedProjects.map((project: Project) => (
+              <div key={project.id_proyect} className="activity-item">
+                <IonImg src={logo} className="activity-icon" />
+                <div className="activity-content">
+                  <IonTitle>{project.Title}</IonTitle>
+                  <p>{project.description}</p>
+                  <p>Tarea Completada por: {project.assigment_employee}</p>
+                </div>
+              </div>
+            ))}
+          </IonCardContent>
+        </IonCard>
 
-        <div className="activity-content">
-          <IonTitle>{activity.title}</IonTitle>
-          <p>{activity.description}</p>
-        </div>
-      </div>
-    ))}
-  </IonCardContent>
-</IonCard>
-
+        {/* Calendario */}
         <div className="calendar-container">
           <Calendar
             onChange={handleDateChange}
@@ -140,4 +146,4 @@ const U_PendingTask: React.FC = () => {
   );
 };
 
-export default U_PendingTask;
+export default U_Complete;

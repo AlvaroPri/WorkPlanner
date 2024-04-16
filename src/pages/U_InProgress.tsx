@@ -51,14 +51,14 @@ const U_InProgress: React.FC = () => {
   };
 
   const Progress = () => {
-    history.push("/InProgress");
+    history.push("/U_InProgress");
   };
   const Complete = () => {
-    history.push("/Complete");
+    history.push("/U_Complete");
   };
 
   const Pending = () => {
-    history.push("/PendingTask");
+    history.push("/U_PendingTask");
   };
 
   const handleComplete = (id_proyect: number) => {
@@ -165,14 +165,6 @@ const U_InProgress: React.FC = () => {
           />
         </div>
         
-        {/* Botón flotante */}
-        <div className="centered-button-container">
-          <div className="centered-button">
-            <IonButton shape="round" className="bottom-button">
-              +
-            </IonButton>
-          </div>
-        </div>
       </IonContent>
     </IonPage>
   );
