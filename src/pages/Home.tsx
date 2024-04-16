@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./Home.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
 import logo from "../img/Logo.png";
-import { IonButton, IonIcon, IonInput, IonToast } from '@ionic/react'; // Agregamos IonToast para mostrar el mensaje
+import { IonButton, IonIcon, IonInput, IonToast } from '@ionic/react';
 import { appsOutline } from 'ionicons/icons';
 import supabase from "../components/SupabaseClient";
 
@@ -44,7 +44,8 @@ const Home: React.FC = () => {
   const [assigment_employee, setAssignee] = useState("");
   const [activities, setActivities] = useState<Activity[]>([]);
   const [id_admin, setIdAdmin] = useState("");
-  const [showToast, setShowToast] = useState(false); // Estado para controlar la visibilidad del mensaje de confirmación
+  const [showToast, setShowToast] = useState(false);
+  const [lastId, setLastId] = useState<number>(100); // Iniciar desde el valor 100
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -62,10 +63,40 @@ const Home: React.FC = () => {
   const Pending = () => {
     history.push("/PendingTask");
   };
+  const Progress = () => {
+    history.push("/Progress");
+  };
+  const Complete = () => {
+    history.push("/Complete");
+  };
+
+  useEffect(() => {
+    const fetchLastId = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('Proyects')
+          .select('id_proyect')
+          .order('id_proyect', { ascending: false })
+          .limit(1);
+
+        if (error) {
+          console.error("Error fetching last id:", error.message);
+        } else {
+          if (data && data.length > 0) {
+            setLastId(data[0].id_proyect);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching last id:", error.message);
+      }
+    };
+
+    fetchLastId();
+  }, []);
 
   const handleAddActivity = async () => {
     const newActivity: Activity = {
-      id_proyect: 4,
+      id_proyect: lastId + 1,
       Title: Title,
       description: description,
       assigment_employee: assigment_employee,
@@ -88,8 +119,8 @@ const Home: React.FC = () => {
         setDescription("");
         setAssignee("");
         setIdAdmin("");
-        setShowToast(true); // Mostrar el mensaje de confirmación
-        Pending(); // Redirigir a la página de tareas pendientes después de agregar la actividad
+        setShowToast(true);
+        Pending();
       }
     } catch (error) {
       console.error("Error adding activity to database:", error.message);
@@ -131,7 +162,6 @@ const Home: React.FC = () => {
           </IonList>
         </div>
 
-        {/* Tarjetas de actividades */}
         <div className="card-container">
           {activities.map((activity: Activity) => (
             <IonCard key={activity.id_proyect} className="card">
@@ -146,24 +176,19 @@ const Home: React.FC = () => {
           ))}
         </div>
 
-        {/* Formulario para añadir actividad */}
         <IonCard className="add-activity-card">
           <IonCardContent>
             <IonItem>
-              <IonLabel position="floating">Title</IonLabel>
-              <IonInput value={Title} onIonChange={(e) => setTitle(e.detail.value!)} />
+              <IonInput value={Title} onIonChange={(e) => setTitle(e.detail.value!)} label="Título" />
             </IonItem>
             <IonItem>
-              <IonLabel position="floating">Description</IonLabel>
-              <IonInput value={description} onIonChange={(e) => setDescription(e.detail.value!)} />
+              <IonInput value={description} onIonChange={(e) => setDescription(e.detail.value!)} label="Descripción" />
             </IonItem>
             <IonItem>
-              <IonLabel position="floating">Assignee</IonLabel>
-              <IonInput value={assigment_employee} onIonChange={(e) => setAssignee(e.detail.value!)} />
+              <IonInput value={assigment_employee} onIonChange={(e) => setAssignee(e.detail.value!)} label="Asignado a" />
             </IonItem>
             <IonItem>
-              <IonLabel position="floating">Admin ID</IonLabel>
-              <IonInput value={id_admin} onIonChange={(e) => setIdAdmin(e.detail.value!)} />
+              <IonInput value={id_admin} onIonChange={(e) => setIdAdmin(e.detail.value!)} label="ID de administrador" />
             </IonItem>
           </IonCardContent>
           <div className="centered-button-container">
@@ -182,7 +207,6 @@ const Home: React.FC = () => {
         />
     
 
-        {/* Calendario */}
         <div className="calendar-container">
           <Calendar
             onChange={handleDateChange}
