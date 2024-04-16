@@ -23,6 +23,7 @@ import {
   IonLabel,
   IonImg,
 } from "@ionic/react";
+import PendingTask from "./PendingTask";
 
 interface Activity {
   id_proyect: number;

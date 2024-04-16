@@ -24,6 +24,7 @@ import './theme/variables.css';
 import InProgress from './pages/InProgress';
 import Complete from './pages/Complete';
 import PendingTask from './pages/PendingTask';
+import U_InProgress from './pages/U_InProgress';
 
 
 
@@ -50,16 +51,18 @@ const App: React.FC = () => (
           <PendingTask />
         </Route>
 
-        <Route exact path="/login">
-        <Login />
-        </Route>
-
+      
         <Route exact path="/InProgress"> 
           <InProgress />
         </Route>
 
         <Route exact path="/Complete"> 
           <Complete />
+        </Route>
+
+        //Rutas para usuarios
+        <Route exact path="/U_InProgress">
+          <U_InProgress />
         </Route>
 
       </IonRouterOutlet>
