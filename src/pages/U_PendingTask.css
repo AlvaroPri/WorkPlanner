@@ -1,0 +1,8 @@
+/* Estilo para el botón de imagen */
+.image-button .button-native {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  
