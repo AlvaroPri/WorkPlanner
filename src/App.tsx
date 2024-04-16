@@ -35,6 +35,9 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/"> 
+          <Login />
+          </Route>
         <Route exact path="/login"> 
           <Login />
         </Route>
@@ -56,10 +59,6 @@ const App: React.FC = () => (
         {/* Rutas para usuario */}
         <Route exact path="/U_InProgress">
           <U_InProgress />
-        </Route>
-        {/* ExploreContainer debe ser la ruta por defecto */}
-        <Route exact path="/">
-          <ExploreContainer />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

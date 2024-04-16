@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./PendingTask.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,11 +21,14 @@ import {
   IonList,
   IonButton,
 } from "@ionic/react";
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
-interface Activity {
+interface Project {
   id: number;
-  title: string;
+  Title: string;
   description: string;
+  id_proyect: number;
+  assigment_employee: number;
 }
 
 const PendingTask: React.FC = () => {
@@ -33,6 +36,7 @@ const PendingTask: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
+  const [pendingTasks, setPendingTasks] = useState<Project[]>([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -51,28 +55,54 @@ const PendingTask: React.FC = () => {
     history.push("/InProgress");
   };
 
-  const Pending = () => {
-    history.push("/PendingTask");
-  };
-
   const Complete = () => {
     history.push("/Complete");
   };
 
+  const Pending = () => {
+    history.push("/PendingTask");
+  };
 
-  // Datos de ejemplo para las actividades completadas
-  const completedActivities: Activity[] = [
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ];
+  const handleInProgress = (id_proyect: number) => {
+    // Enviar solicitud para marcar el proyecto como InProgress en la base de datos
+    supabase
+      .from<Project>("Proyects")
+      .update({ state: "InProgress" })
+      .eq("id_proyect", id_proyect)
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error updating project state:", error.message);
+        } else {
+          // Actualizar el estado local después de completar con éxito la actualización en la base de datos
+          const updatedProjects = pendingTasks.map(project =>
+            project.id_proyect === id_proyect ? { ...project, state: "InProgress" } : project
+          );
+          setPendingTasks(updatedProjects);
+        }
+      });
+  };
+
+  useEffect(() => {
+    // Consultar tareas pendientes desde la base de datos utilizando Supabase
+    supabase
+      .from<Project>("Proyects") // Asegúrate de que la tabla se llame "Proyects"
+      .select("*")
+      .eq("state", "PendingTask") // Ajusta según la columna que indica el estado de la tarea
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching pending tasks:", error.message);
+        } else {
+          setPendingTasks(data || []);
+        }
+      });
+  }, []);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
+          {/* Contenedor del logo y "WorkPlanner" */}
+          <div className="logo-title-container">
             {/* Logo */}
             <IonImg src={logo} className="logo" />
 
@@ -111,24 +141,18 @@ const PendingTask: React.FC = () => {
         </div>
 
         <IonCard className="activities-card">
-  <IonCardContent>
-    {completedActivities.map((activity: Activity) => (
-      <div key={activity.id} className="activity-item">
-        {/* Envolver la imagen con IonButton y aplicar un estilo para eliminar fondo y borde */}
-        <IonButton onClick={() => history.push("/Complete")} className="image-button">
-  <IonImg src={logo} className="activity-icon" />
-</IonButton>
-
-        <div className="activity-content">
-          <IonTitle>{activity.title}</IonTitle>
-          <p>{activity.description}</p>
-        </div>
-      </div>
-    ))}
-  </IonCardContent>
-</IonCard>
-
-
+          <IonCardContent className="Card_PendingTask">
+            {pendingTasks.map((project: Project) => (
+              <div key={project.id} className="activity-item">
+                <div className="activity-content">
+                  <IonTitle>{project.Title}</IonTitle>
+                  <p>{project.description}</p>
+                  <IonButton onClick={() => handleInProgress(project.id_proyect)}>Marcar como En progreso</IonButton>
+                </div>
+              </div>
+            ))}
+          </IonCardContent>
+        </IonCard>
 
         <div className="calendar-container">
           <Calendar

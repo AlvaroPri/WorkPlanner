@@ -5,3 +5,6 @@
   padding: 0 !important;
   box-shadow: none !important;
 }
+.Card_PendingTask{
+  background-color: brown;
+}
