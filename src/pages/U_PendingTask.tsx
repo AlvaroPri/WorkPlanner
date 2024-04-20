@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./U_PendingTask.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,12 +20,16 @@ import {
   IonItem,
   IonList,
   IonButton,
+  IonAlert
 } from "@ionic/react";
+import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
-interface Activity {
+interface Project {
   id: number;
-  title: string;
+  Title: string;
   description: string;
+  id_proyect: number;
+  assigment_employee: number;
 }
 
 const U_PendingTask: React.FC = () => {
@@ -33,6 +37,9 @@ const U_PendingTask: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(
     new Date()
   );
+  const [pendingTasks, setPendingTasks] = useState<Project[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Project | null>(null);
+  const [showAlert, setShowAlert] = useState(false); // Estado para controlar la visibilidad de la alerta
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -59,30 +66,31 @@ const U_PendingTask: React.FC = () => {
     history.push("/U_Complete");
   };
 
-
-  // Datos de ejemplo para las actividades completadas
-  const completedActivities: Activity[] = [
-    { id: 1, title: "Actividad Completada 1", description: "Descripción de la actividad completada 1" },
-    { id: 2, title: "Actividad Completada 2", description: "Descripción de la actividad completada 2" },
-    { id: 3, title: "Actividad Completada 3", description: "Descripción de la actividad completada 3" },
-  ];
+  useEffect(() => {
+    // Consultar tareas pendientes desde la base de datos utilizando Supabase
+    supabase
+      .from<Project>("Proyects") // Asegúrate de que la tabla se llame "Proyects"
+      .select("*")
+      .eq("state", "PendingTask") // Ajusta según la columna que indica el estado de la tarea
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching pending tasks:", error.message);
+        } else {
+          setPendingTasks(data || []);
+        }
+      });
+  }, []);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-    {/* Contenedor del logo y "WorkPlanner" */}
-    <div className="logo-title-container">
-            {/* Logo */}
+          <div className="logo-title-container">
             <IonImg src={logo} className="logo" />
-
-            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
 
-          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
-            {/* Título "Projects" */}
             <IonTitle className="projects-title">Pending Task</IonTitle>
           </div>
           
@@ -111,22 +119,25 @@ const U_PendingTask: React.FC = () => {
         </div>
 
         <IonCard className="activities-card">
-  <IonCardContent>
-    {completedActivities.map((activity: Activity) => (
-      <div key={activity.id} className="activity-item">
-        {/* Envolver la imagen con IonButton y aplicar un estilo para eliminar fondo y borde */}
-        <IonButton onClick={() => history.push("/Complete")} className="image-button">
-  <IonImg src={logo} className="activity-icon" />
-</IonButton>
-
-        <div className="activity-content">
-          <IonTitle>{activity.title}</IonTitle>
-          <p>{activity.description}</p>
-        </div>
-      </div>
-    ))}
-  </IonCardContent>
-</IonCard>
+          <IonCardContent>
+            {pendingTasks.map((activity: Project) => (
+              <div key={activity.id} className="activity-item">
+                <IonButton onClick={() => history.push("/Complete")} className="image-button">
+                  <IonImg src={logo} className="activity-icon" />
+                </IonButton>
+                <div className="activity-content">
+                  <IonTitle onClick={() => {
+                    setSelectedActivity(activity);
+                    setShowAlert(true);
+                  }}>
+                    {activity.Title}
+                  </IonTitle>
+                  <p>{activity.description}</p>
+                </div>
+              </div>
+            ))}
+          </IonCardContent>
+        </IonCard>
 
         <div className="calendar-container">
           <Calendar
@@ -134,8 +145,16 @@ const U_PendingTask: React.FC = () => {
             value={selectedDate as Date | Date[] | null}
           />
         </div>
-
       </IonContent>
+
+      {/* Alerta emergente */}
+      <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        header={selectedActivity ? selectedActivity.Title : ""}
+        message={selectedActivity ? selectedActivity.description : ""}
+        buttons={['OK']}
+      />
     </IonPage>
   );
 };

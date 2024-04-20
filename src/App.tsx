@@ -64,11 +64,11 @@ const App: React.FC = () => (
 
 
         {/* Rutas para usuario */}
-        <Route exact path="/user/U_InProgress">
+        <Route exact path="/U_InProgress">
           <U_InProgress />
         </Route>
 
-        <Route exact path="/user/U_PendinTask">
+        <Route exact path="/U_PendingTask">
           <U_PendingTask />
         </Route>
 

@@ -20,6 +20,7 @@ import {
   IonItem,
   IonList,
   IonButton,
+  IonAlert
 } from "@ionic/react";
 import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
@@ -36,6 +37,8 @@ const U_InProgress: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projectsInProgress, setProjectsInProgress] = useState<Project[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(new Date());
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState<Project | null>(null);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -53,6 +56,7 @@ const U_InProgress: React.FC = () => {
   const Progress = () => {
     history.push("/U_InProgress");
   };
+
   const Complete = () => {
     history.push("/U_Complete");
   };
@@ -147,7 +151,12 @@ const U_InProgress: React.FC = () => {
               <div key={project.id_proyect} className="activity-item">
                 <IonImg src={logo} className="activity-icon" />
                 <div className="activity-content">
-                  <IonTitle>{project.Title}</IonTitle>
+                  <IonTitle onClick={() => {
+                    setSelectedActivity(project);
+                    setShowAlert(true);
+                  }}>
+                    {project.Title}
+                  </IonTitle>
                   <p>{project.description}</p>
                   <p>Tarea asignada a: {project.assigment_employee}</p>
                   <IonButton onClick={() => handleComplete(project.id_proyect)}>Marcar como completo</IonButton>
@@ -166,6 +175,15 @@ const U_InProgress: React.FC = () => {
         </div>
         
       </IonContent>
+
+      {/* Alerta emergente */}
+      <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        header={selectedActivity ? selectedActivity.Title : ""}
+        message={selectedActivity ? selectedActivity.description : ""}
+        buttons={['OK']}
+      />
     </IonPage>
   );
 };
