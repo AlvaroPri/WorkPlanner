@@ -26,34 +26,42 @@ const Login: React.FC = () => {
       setUserInteracted(true);
       return;
     }
-
+  
     if (!username || !password) {
       setErrorMessage('Por favor, ingresa tu ID y contraseña.');
       setShowError(true);
       return;
     }
-
+  
     try {
       const { data, error } = await supabase
         .from('RegisterUser')
         .select('*')
         .eq('ID', username)
         .single();
-
+  
       if (error) {
         console.error('Error al consultar la base de datos:', error.message);
         setErrorMessage('Error al consultar la base de datos.');
         setShowError(true);
         return;
       }
-
+  
       if (!data || data.Password !== password) {
         setErrorMessage('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
         setShowError(true);
         return;
       }
-
-      history.push('/home');
+  
+      // Verifica si el usuario es un administrador
+      if (data.Admin === true) {
+        // Redirige a la página de inicio de administrador
+        history.push('/home');
+      } else {
+        // Redirige a la página de inicio de usuario normal
+        history.push('/U_home');
+      }
+  
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setErrorMessage('Error al iniciar sesión. Por favor, inténtalo de nuevo.');

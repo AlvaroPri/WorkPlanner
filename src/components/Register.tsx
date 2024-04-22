@@ -9,6 +9,7 @@ import {
   IonAlert,
   IonInput,
   IonDatetime,
+  IonCheckbox, // Importa IonCheckbox
 } from '@ionic/react';
 import supabase from '../components/SupabaseClient';
 import { IonButton, IonIcon } from '@ionic/react';
@@ -21,6 +22,7 @@ const Register: React.FC = () => {
   const [id, setID] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const history = useHistory<any>();
 
@@ -31,9 +33,8 @@ const Register: React.FC = () => {
     }
 
     try {
-      // Obtener la fecha y hora actual del sistema
       const currentDate = new Date();
-      const dateRegister = currentDate.toISOString(); // Convertir a formato ISO 8601
+      const dateRegister = currentDate.toISOString();
 
       const { data, error } = await supabase
         .from('RegisterUser')
@@ -55,7 +56,8 @@ const Register: React.FC = () => {
             ID: id,
             Password: password,
             Date: birthdate,
-            Date_Register: dateRegister, // Incluir la fecha y hora de registro
+            Date_Register: dateRegister,
+            Admin: isAdmin, // Aquí se incluye si es administrador o no
           },
         ]);
 
@@ -129,6 +131,13 @@ const Register: React.FC = () => {
               value={birthdate}
               onIonChange={(e) => setBirthdate(e.detail.value!)}
             />
+          </IonItem>
+          <IonItem>
+            <IonCheckbox // Usa IonCheckbox para la selección de administrador
+              checked={isAdmin}
+              onIonChange={(e) => setIsAdmin(e.detail.checked)}
+            />
+            <label>¿Es administrador?</label> {/* Agrega una etiqueta para la selección de administrador */}
           </IonItem>
 
           <IonButton expand="full" onClick={handleRegister}>Registrar</IonButton>
