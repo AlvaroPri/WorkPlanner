@@ -63,6 +63,9 @@ const PendingTask: React.FC = () => {
     history.push("/PendingTask");
   };
 
+  const Home = () => {
+    history.push("/Home");
+  };
   const handleInProgress = (id_proyect: number) => {
     // Enviar solicitud para marcar el proyecto como InProgress en la base de datos
     supabase
@@ -135,6 +138,9 @@ const PendingTask: React.FC = () => {
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
+              <IonLabel onClick={Home}>Home</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
               <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>
             </IonItem>
           </IonList>
@@ -144,10 +150,11 @@ const PendingTask: React.FC = () => {
           <IonCardContent className="Card_PendingTask">
             {pendingTasks.map((project: Project) => (
               <div key={project.id} className="activity-item">
+            <IonButton  className="Button"onClick={() => handleInProgress(project.id_proyect)}>✅</IonButton>
                 <div className="activity-content">
                   <IonTitle>{project.Title}</IonTitle>
                   <p>{project.description}</p>
-                  <IonButton onClick={() => handleInProgress(project.id_proyect)}>Marcar como En progreso</IonButton>
+
                 </div>
               </div>
             ))}

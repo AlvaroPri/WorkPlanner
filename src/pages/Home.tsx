@@ -64,7 +64,7 @@ const Home: React.FC = () => {
     history.push("/PendingTask");
   };
   const Progress = () => {
-    history.push("/Progress");
+    history.push("/InProgress");
   };
   const Complete = () => {
     history.push("/Complete");

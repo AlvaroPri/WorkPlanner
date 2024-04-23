@@ -60,6 +60,10 @@ const Complete: React.FC = () => {
     history.push("/PendingTask");
   };
 
+  const Home = () => {
+    history.push("/Home");
+  };
+
   useEffect(() => {
     // Consultar proyectos completados desde la base de datos utilizando Supabase
     supabase
@@ -110,6 +114,9 @@ const Complete: React.FC = () => {
             </IonItem>
             <IonItem className="menu-item">
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Home}>Home</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
               <IonButton onClick={handleAtras}>Log Out</IonButton>

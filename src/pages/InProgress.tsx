@@ -61,6 +61,10 @@ const InProgress: React.FC = () => {
     history.push("/PendingTask");
   };
 
+  const Home = () => {
+    history.push("/Home");
+  };
+
   const handleComplete = (id_proyect: number) => {
     // Enviar solicitud para marcar el proyecto como completo en la base de datos
     supabase
@@ -133,6 +137,9 @@ const InProgress: React.FC = () => {
             </IonItem>
             <IonItem className="menu-item">
               <IonLabel onClick={Pending}>Pending Task</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Home}>Home</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
               <IonButton className="AtrasButtom" onClick={handleAtras}>Log Out</IonButton>

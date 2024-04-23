@@ -6,5 +6,24 @@
   box-shadow: none !important;
 }
 .Card_PendingTask{
-  background-color: brown;
+  background-color: #918F8F;
+  color: black;
+}
+.activity-item {
+  display: flex; /* Utilizamos flexbox para distribuir los elementos */
+  align-items: center; /* Alineamos verticalmente los elementos al centro */
+}
+
+.activity-content {
+  flex: 1; /* Permite que el contenido ocupe todo el espacio restante */
+}
+
+.logo {
+  margin-right: 1px; /* Ajusta el margen derecho del logo */
+}
+.Button {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
