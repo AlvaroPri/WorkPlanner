@@ -105,13 +105,13 @@ const Login: React.FC = () => {
             onBlur={() => setUserInteracted(true)}
           />
         </div>
-        <IonButton className="oval-button" expand="full" onClick={handleLogin}>
+        <IonButton  shape="round" className="oval-button" expand="full" onClick={handleLogin}>
           Iniciar Sesión
         </IonButton>
-        <IonButton style={{ borderRadius: '10px' }} className="oval-button" expand="full" onClick={handleRegister}>
+        <IonButton shape="round" className="oval-button" expand="full" onClick={handleRegister}>
           Registrarse
         </IonButton>
-        <IonButton className="oval-button" expand="full" onClick={handleForgotPassword}>
+        <IonButton shape="round" className="oval-button" expand="full" onClick={handleForgotPassword}>
           ¿Olvidaste tu contraseña?
         </IonButton>
         <IonAlert

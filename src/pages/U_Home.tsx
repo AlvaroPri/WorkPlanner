@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Pending = () => {

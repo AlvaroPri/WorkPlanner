@@ -49,7 +49,7 @@ const Complete: React.FC = () => {
 
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Progress = () => {
@@ -119,7 +119,8 @@ const Complete: React.FC = () => {
               <IonLabel onClick={Home}>Home</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonButton onClick={handleAtras}>Log Out</IonButton>
+              <IonButton color="danger" expand="full" onClick={handleAtras}>Log Out</IonButton>
+              
             </IonItem>
           </IonList>
         </div>

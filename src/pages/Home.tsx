@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Pending = () => {
@@ -156,12 +156,11 @@ const Home: React.FC = () => {
             <IonItem className="menu-item" onClick={Pending}>
               <IonLabel>Pending Task</IonLabel>
             </IonItem>
-            <IonItem className="menu-item" onClick={handleAtras}>
-              <IonLabel>Log Out</IonLabel>
+            <IonItem className="menu-item">
+              <IonButton  className="AtrasButtom"onClick={handleAtras}>Log Out</IonButton>
             </IonItem>
           </IonList>
         </div>
-
         <div className="card-container">
           {activities.map((activity: Activity) => (
             <IonCard key={activity.id_proyect} className="card">

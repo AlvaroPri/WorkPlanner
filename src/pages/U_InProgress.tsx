@@ -50,7 +50,7 @@ const U_InProgress: React.FC = () => {
 
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Progress = () => {

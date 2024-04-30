@@ -20,6 +20,7 @@ import {
   IonItem,
   IonList,
   IonButton,
+  IonInput,
 } from "@ionic/react";
 import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
 
@@ -36,6 +37,7 @@ const InProgress: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projectsInProgress, setProjectsInProgress] = useState<Project[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(new Date());
+  const [cedula, setCedula] = useState<string>("");
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -47,7 +49,7 @@ const InProgress: React.FC = () => {
 
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Progress = () => {
@@ -65,21 +67,17 @@ const InProgress: React.FC = () => {
     history.push("/Home");
   };
 
-  const handleComplete = (id_proyect: number) => {
-    // Enviar solicitud para marcar el proyecto como completo en la base de datos
+  const handleComplete = () => {
+    // Consultar proyectos en progreso desde la base de datos utilizando Supabase
     supabase
       .from<Project>("Proyects")
-      .update({ state: "Complete" })
-      .eq("id_proyect", id_proyect)
-      .then(({ error }) => {
+      .select("*")
+      .eq("assigment_employee", cedula)
+      .then(({ data, error }) => {
         if (error) {
-          console.error("Error updating project state:", error.message);
+          console.error("Error fetching projects:", error.message);
         } else {
-          // Actualizar el estado local después de completar con éxito la actualización en la base de datos
-          const updatedProjects = projectsInProgress.map(project =>
-            project.id_proyect === id_proyect ? { ...project, state: "Complete" } : project
-          );
-          setProjectsInProgress(updatedProjects);
+          setProjectsInProgress(data || []);
         }
       });
   };
@@ -149,7 +147,19 @@ const InProgress: React.FC = () => {
 
         {/* Lista de proyectos en progreso */}
         <IonCard className="activities-card">
+        <div className="Search">
+            <h1>Buscador </h1>
+            <IonItem>
+              <IonInput
+                placeholder="Número de cédula"
+                value={cedula}
+                onIonChange={(e) => setCedula(e.detail.value!)}
+              ></IonInput>
+              <IonButton onClick={handleComplete}>Buscar</IonButton>
+            </IonItem>
+          </div>
           <IonCardContent>
+          
             {projectsInProgress.map((project: Project) => (
               <div key={project.id_proyect} className="activity-item">
                 <IonImg src={logo} className="activity-icon" />

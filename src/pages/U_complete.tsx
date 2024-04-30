@@ -23,6 +23,7 @@ import {
   IonInput
 } from "@ionic/react";
 import supabase from "../components/SupabaseClient"; // Importar supabase desde el archivo SupabaseClient.js
+import Complete from "./Complete";
 
 interface Project {
   id: number;
@@ -49,11 +50,14 @@ const U_Complete: React.FC = () => {
 
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Progress = () => {
     history.push("/U_InProgress");
+  };
+  const Complete = () => {
+    history.push("/U_Complete");
   };
 
   const Pending = () => {
@@ -107,6 +111,9 @@ const U_Complete: React.FC = () => {
           <IonList className="menu-list">
             <IonItem className="menu-item">
               <IonLabel onClick={Progress}>In Progress</IonLabel>
+            </IonItem>
+            <IonItem className="menu-item">
+              <IonLabel onClick={Complete}>Complete</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
               <IonLabel onClick={Pending}>Pending Task</IonLabel>

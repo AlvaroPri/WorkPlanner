@@ -51,7 +51,7 @@ const U_PendingTask: React.FC = () => {
 
   const history = useHistory<any>();
   const handleAtras = () => {
-    history.push("/login");
+    window.location.href = "/login";
   };
 
   const Progress = () => {
