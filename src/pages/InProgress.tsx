@@ -4,7 +4,7 @@ import "./InProgress.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import logo from "../img/Logo.png";
+import logo from "../img/logoN.png";
 import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
@@ -99,9 +99,8 @@ const InProgress: React.FC = () => {
 
   return (
     <IonPage>
-      {/* Encabezado */}
-      <IonHeader>
-        <IonToolbar>
+     <IonHeader className="header">
+        <IonToolbar className="encabezado">
           {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
             {/* Logo */}
@@ -117,19 +116,16 @@ const InProgress: React.FC = () => {
             <IonTitle className="projects-title">In Progress</IonTitle>
           </div>
           
-          <IonButton slot="end" onClick={toggleMenu}>
+          <IonButton slot="end" onClick={toggleMenu }>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
 
+{/*////////////////MENU//////////////*/}
       <IonContent fullscreen>
-        {/* Menú lateral */}
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
-            <IonItem className="menu-item">
-              <IonLabel onClick={Progress}>In Progress</IonLabel>
-            </IonItem>
             <IonItem className="menu-item">
               <IonLabel onClick={Complete}>Complete</IonLabel>
             </IonItem>
@@ -145,21 +141,21 @@ const InProgress: React.FC = () => {
           </IonList>
         </div>
 
-        {/* Lista de proyectos en progreso */}
+{/*////////////Lista de proyectos en progreso///////*/}
+        <div className="parent-container">  
         <IonCard className="activities-card">
-        <div className="Search">
-            <h1>Buscador </h1>
-            <IonItem>
-              <IonInput
-                placeholder="Número de cédula"
-                value={cedula}
-                onIonChange={(e) => setCedula(e.detail.value!)}
-              ></IonInput>
-              <IonButton onClick={handleComplete}>Buscar</IonButton>
-            </IonItem>
-          </div>
+  <div className="Search">
+    <h1>Buscador </h1>
+    <IonItem>
+      <IonInput
+        placeholder="Número de cédula"
+        value={cedula}
+        onIonChange={(e) => setCedula(e.detail.value!)}
+      ></IonInput>
+      <IonButton onClick={handleComplete}>Buscar</IonButton>
+    </IonItem>
+  </div>  
           <IonCardContent>
-          
             {projectsInProgress.map((project: Project) => (
               <div key={project.id_proyect} className="activity-item">
                 <IonImg src={logo} className="activity-icon" />
@@ -173,7 +169,7 @@ const InProgress: React.FC = () => {
             ))}
           </IonCardContent>
         </IonCard>
-
+        </div>
         {/* Calendario */}
         <div className="calendar-container">
           <Calendar
@@ -182,15 +178,7 @@ const InProgress: React.FC = () => {
           />
         </div>
         
-        {/* Botón flotante */}
-        <div className="centered-button-container">
-          <div className="centered-button">
-            <IonButton shape="round" className="bottom-button">
-              +
-            </IonButton>
-          </div>
-        </div>
-      </IonContent>
+       </IonContent>
     </IonPage>
   );
 };

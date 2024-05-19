@@ -4,7 +4,7 @@ import "./Home.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import logo from "../img/Logo.png";
+import logo from "../img/logoN.png";
 import { IonButton, IonIcon, IonInput, IonToast } from '@ionic/react';
 import { appsOutline } from 'ionicons/icons';
 import supabase from "../components/SupabaseClient";
@@ -129,21 +129,28 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
+     <IonHeader className="header">
+        <IonToolbar className="encabezado">
+          {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
+            {/* Logo */}
             <IonImg src={logo} className="logo" />
+
+            {/* Título "WorkPlanner" */}
             <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
+
+          {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
-            <IonTitle className="projects-title">Projects</IonTitle>
+            {/* Título "Projects" */}
+            <IonTitle className="projects-title">Home</IonTitle>
           </div>
-          <IonButton slot="end" onClick={toggleMenu}>
+          
+          <IonButton slot="end" onClick={toggleMenu }>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
       </IonHeader>
-
       <IonContent fullscreen>
         <div className={`menu ${menuOpen ? "open" : ""}`}>
           <IonList className="menu-list">
@@ -161,6 +168,8 @@ const Home: React.FC = () => {
             </IonItem>
           </IonList>
         </div>
+
+        
         <div className="card-container">
           {activities.map((activity: Activity) => (
             <IonCard key={activity.id_proyect} className="card">

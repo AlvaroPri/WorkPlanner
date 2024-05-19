@@ -4,7 +4,7 @@ import "./Complete.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import logo from "../img/Logo.png";
+import logo from "../img/logoN.png";
 import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
@@ -81,9 +81,8 @@ const Complete: React.FC = () => {
 
   return (
     <IonPage>
-      {/* Encabezado */}
-      <IonHeader>
-        <IonToolbar>
+   <IonHeader className="header">
+        <IonToolbar className="encabezado">
           {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
             {/* Logo */}
@@ -96,15 +95,15 @@ const Complete: React.FC = () => {
           {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
             {/* Título "Projects" */}
-            <IonTitle className="projects-title">Complete</IonTitle>
+            <IonTitle className="projects-title">COMPLETE</IonTitle>
           </div>
           
-          <IonButton slot="end" onClick={toggleMenu}>
+          <IonButton slot="end" onClick={toggleMenu }>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />
           </IonButton>
         </IonToolbar>
-      </IonHeader>
-
+        </IonHeader>
+        
       <IonContent fullscreen>
         {/* Menú lateral */}
         <div className={`menu ${menuOpen ? "open" : ""}`}>
@@ -119,13 +118,13 @@ const Complete: React.FC = () => {
               <IonLabel onClick={Home}>Home</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonButton color="danger" expand="full" onClick={handleAtras}>Log Out</IonButton>
-              
+              <IonButton expand="full" onClick={handleAtras}>Log Out</IonButton>
             </IonItem>
           </IonList>
         </div>
 
         {/* Lista de proyectos completados */}
+        <div className="parent-container">  
         <IonCard className="activities-card">
           <IonCardContent>
             {completedProjects.map((project: Project) => (
@@ -140,7 +139,7 @@ const Complete: React.FC = () => {
             ))}
           </IonCardContent>
         </IonCard>
-
+            </div>
         {/* Calendario */}
         <div className="calendar-container">
           <Calendar

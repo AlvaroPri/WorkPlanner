@@ -4,7 +4,7 @@ import "./PendingTask.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import logo from "../img/Logo.png";
+import logo from "../img/logoN.png";
 import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
@@ -102,8 +102,8 @@ const PendingTask: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
+      <IonHeader className="header">
+        <IonToolbar className="encabezado">
           {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
             {/* Logo */}
@@ -135,9 +135,6 @@ const PendingTask: React.FC = () => {
               <IonLabel onClick={Complete}>Complete</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
-              <IonLabel onClick={Pending}>Pending Task</IonLabel>
-            </IonItem>
-            <IonItem className="menu-item">
               <IonLabel onClick={Home}>Home</IonLabel>
             </IonItem>
             <IonItem className="menu-item">
@@ -146,6 +143,7 @@ const PendingTask: React.FC = () => {
           </IonList>
         </div>
 
+        <div className="parent-container">  
         <IonCard className="activities-card">
           <IonCardContent className="Card_PendingTask">
             {pendingTasks.map((project: Project) => (
@@ -160,6 +158,7 @@ const PendingTask: React.FC = () => {
             ))}
           </IonCardContent>
         </IonCard>
+            </div>
 
         <div className="calendar-container">
           <Calendar
