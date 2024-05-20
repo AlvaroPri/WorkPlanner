@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import "./U_Complete.css";
+import "./compar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import logo from "../img/Logo.png";
+import logo from "../img/logoN.png";
 import { appsOutline } from 'ionicons/icons';
 import {
   IonContent,
@@ -82,8 +83,8 @@ const U_Complete: React.FC = () => {
   return (
     <IonPage>
       {/* Encabezado */}
-      <IonHeader>
-        <IonToolbar>
+      <IonHeader className="header">
+        <IonToolbar className="encabezado">
           {/* Contenedor del logo y "WorkPlanner" */}
           <div className="logo-title-container">
             {/* Logo */}
@@ -125,6 +126,7 @@ const U_Complete: React.FC = () => {
         </div>
 
         {/* Lista de proyectos completados */}
+        <div className="parent-container"> 
         <IonCard className="activities-card">
           <IonCardContent>
             {completedProjects.map((project: Project) => (
@@ -139,6 +141,7 @@ const U_Complete: React.FC = () => {
             ))}
           </IonCardContent>
         </IonCard>
+        </div>
 
         {/* Calendario */}
         <div className="calendar-container">
