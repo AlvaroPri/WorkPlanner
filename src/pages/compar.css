@@ -207,7 +207,45 @@ body, html {
   
 
 
+  .parent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .activities-card {
+    max-width: 900px; /* Ajusta este valor según tu preferencia */
+    width: 100%;
+  }
+  
+  .activity-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Ajusta este valor según tu preferencia */
+  }
+  
+  .activity-icon {
+    width: 50px; /* Ajusta este valor según tu preferencia */
+    height: auto;
+    margin-right: 10px; /* Ajusta este valor según tu preferencia */
+  }
+  
+  .activity-content {
+    flex: 1;
+  }
+  
+  .activity-content p {
+    margin: 5px 0;
+  }
 
+  .activity-content p {
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 250px; /* Ajusta este valor según tu preferencia */
+  }
+  
 
 
     /*/////////////////CALENDARIO/////////////////*/

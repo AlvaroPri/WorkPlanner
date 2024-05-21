@@ -1,20 +1,31 @@
-/* Estilo para el botón de imagen */
-.image-button .button-native {
-    background-color: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
   
-  .alert-header {
-    font-size: 1.2rem;
-    font-weight: bold;
+  .activities-card {
+    width: 90%;
+    max-width: 500px;
+    margin: 5vh auto 0; /* Añade margen superior a la tarjeta */
   }
   
-  .alert-message {
-    font-size: 1rem;
+  .activity-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
   }
   
-  .alert-button {
-    font-weight: bold;
+  .activity-content {
+    flex: 1;
   }
+  
+  .activity-content p {
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+ 

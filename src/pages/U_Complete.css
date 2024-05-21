@@ -1,18 +1,30 @@
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .activities-card {
-    margin: 20px;
-  }
-  
-  .activity-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .activity-icon {
-    margin-right: 10px;
-  }
-  
-  .bottom-icon {
-    font-size: 32px;
-  }
-  
+  max-width: 900px; /* Ajusta este valor según tu preferencia */
+  width: 100%;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Ajusta este valor según tu preferencia */
+}
+
+.activity-icon {
+  width: 50px; /* Ajusta este valor según tu preferencia */
+  height: auto;
+  margin-right: 10px; /* Ajusta este valor según tu preferencia */
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-content p {
+  margin: 5px 0;
+}
