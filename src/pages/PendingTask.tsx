@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
-import "./PendingTask.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
@@ -143,7 +142,7 @@ const PendingTask: React.FC = () => {
           </IonList>
         </div>
 
-        <div className="parent-container">  
+        <div className="container-PendigTask">  
         <IonCard className="activities-card">
           <IonCardContent className="Card_PendingTask">
             {pendingTasks.map((project: Project) => (

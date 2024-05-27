@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
-import "./InProgress.css";
 import "./compar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
@@ -143,10 +142,9 @@ const InProgress: React.FC = () => {
         </div>
 
 {/*////////////Lista de proyectos en progreso///////*/}
-        <div className="parent-container">  
+        <div className="container-InProgress">  
         <IonCard className="activities-card">
   <div className="Search">
-    <h1>Buscador </h1>
     <IonItem>
       <IonInput
         placeholder="Número de cédula"

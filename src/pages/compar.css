@@ -1,69 +1,55 @@
 /* Establecer márgenes y padding de cero para body y html */
 body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
 
-  @media (max-width: 768px) {
-    .activities-card {
+/* Estilos generales responsivos para tarjetas de actividades */
+@media (max-width: 768px) {
+  .activities-card {
       width: 90%; /* Ancho para pantallas medianas */
-    }
   }
-  
-  @media (max-width: 480px) {
-    .activities-card {
+}
+
+@media (max-width: 480px) {
+  .activities-card {
       width: 100%; /* Ancho para pantallas pequeñas */
-    }
   }
-  
+}
 
-    /*//////////////Estilo para el logo///////////*/
+/*//////////////Estilo para el logo///////////*/
 .logo {
-    width: 80px; /* Ajusta el ancho del logo */
-    max-width: 90px; /* Ancho máximo del logo */
-    height: 70px; /* Ajusta la altura automáticamente para mantener la proporción */
-    margin-right: 10px; /* Espacio entre el logo y el título */
-  }
-  
-  /* Estilo para el título "WorkPlanner" */
-  .header-title {
-    color: #ffffff; /* Color del texto */
-    font-size: 1.5em; /* Tamaño de la fuente */
-  }
+  width: 80px; /* Ajusta el ancho del logo */
+  max-width: 90px; /* Ancho máximo del logo */
+  height: 70px; /* Ajusta la altura automáticamente para mantener la proporción */
+  margin-right: 10px; /* Espacio entre el logo y el título */
+}
 
-    /*///////////////////////HEADER///////////////////////*/
+/* Estilo para el título "WorkPlanner" */
+.header-title {
+  color: #ffffff; /* Color del texto */
+  font-size: 1.5em; /* Tamaño de la fuente */
+  margin: 0;
+  font-weight: bold;
+}
 
-    
-  .header-title {
-    margin: 0 auto;
-  }
-  
- /* Estilos para el contenedor del logo y "WorkPlanner" */
+/* Estilos para el contenedor del logo y "WorkPlanner" */
 .logo-title-container {
   display: flex;
   align-items: center;
 }
 
-
-
-/* Estilos para el título "WorkPlanner" en el header */
-.header-title {
-  margin: 0;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
 /* Estilos para el contenedor del título "Projects" */
-
 .projects-title-container {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center; /* Centrar horizontalmente el texto */
-  height: -50%; /* Ajusta el contenedor para centrar verticalmente */
+  height: 50%; /* Ajusta el contenedor para centrar verticalmente */
+  margin-left: auto; /* Empuja este contenedor al final de la barra de herramientas */
 }
 
 /* Estilos para el título "Projects" en el header */
@@ -71,6 +57,7 @@ body, html {
   margin: 0.25rem;
   font-size: 1.5em;
   font-weight: bold;
+  color: #ffffff; /* Color del texto */
 }
 
 /* Estilos para el botón del menú */
@@ -78,312 +65,301 @@ body, html {
   margin-left: auto; /* Empuja el botón del menú hacia el extremo derecho */
 }
 
-  .card {
-    margin: 50px;
-  }
-  
- 
-   /*/////////////encabezado/////////////*/
-
-   .header {
-    background-color: #074C73; /* Fondo del encabezado */
-    color: #ffffff; /* Color del texto dentro del encabezado */
-  }
-  
-  /* Estilo para la barra de herramientas dentro del encabezado */
-  .encabezado {
-    --background: #074C73; /* Fondo de la barra de herramientas */
-    --color: #ffffff; /* Color del texto dentro de la barra de herramientas */
-  }
-  
-  /* Estilo para el contenedor del logo y el título "WorkPlanner" */
-  .logo-title-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Estilo para el contenedor del título "Projects" */
-  .projects-title-container {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Empuja este contenedor al final de la barra de herramientas */
-  }
-  
-  /* Estilo para el título "Projects" */
-  .projects-title {
-    color: #ffffff; /* Color del texto */
-    font-size: 1.2em; /* Tamaño de la fuente */
-  }
-
-
-    /*////////////////////MENU/////////////////////*/
-    .header ion-button {
-        --background: none; /* Fondo del botón */
-        --color: #ffffff; /* Color del icono dentro del botón */
-      }    
-.menu {
-    position: fixed;
-    top: 56px; /* Altura del header */
-    right: 0;
-    width: 80%;
-    max-width: 300px;
-    max-height: calc(100% - 56px); /* Resta la altura del header */
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    z-index: 9999;
-    transition: transform 0.3s ease;
-    transform: translateX(100%);
-    padding: 20px; /* Padding para el contenedor */
-  }
-  
-  .menu.open {
-    transform: translateX(0);
-    background-color: #074C73; /* Color de fondo cuando el menú está abierto */
-  }
-  
-  .menu-list {
-    background-color: #074C73;
-    list-style-type: none; /* Quitar viñetas de la lista */
-    padding: 0; /* Quitar padding */
-    margin: 0; /* Quitar margen */
-  }
-  
-/* Estilos para los ítems del menú */
-.menu-item {
-    background-color: #074C73;
-    --color: #ffffff; /* Color del texto del botón */
-    margin-bottom: 10px; /* Espacio entre ítems */
+/* Estilos generales para la tarjeta */
+.card {
+  margin: 50px;
 }
 
-  /* Estilos para las etiquetas dentro de los ítems del menú */
+/*/////////////encabezado/////////////*/
+.header {
+  background-color: #074C73; /* Fondo del encabezado */
+  color: #ffffff; /* Color del texto dentro del encabezado */
+}
+
+/* Estilo para la barra de herramientas dentro del encabezado */
+.encabezado {
+  --background: #074C73; /* Fondo de la barra de herramientas */
+  --color: #ffffff; /* Color del texto dentro de la barra de herramientas */
+}
+
+/* Estilo para el contenedor del logo y el título "WorkPlanner" */
+.logo-title-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para el contenedor del título "Projects" */
+.projects-title-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Empuja este contenedor al final de la barra de herramientas */
+}
+
+/*////////////////////MENU/////////////////////*/
+.header ion-button {
+  --background: none; /* Fondo del botón */
+  --color: #ffffff; /* Color del icono dentro del botón */
+}
+
+.menu {
+  position: fixed;
+  top: 56px; /* Altura del header */
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  max-height: calc(100% - 56px); /* Resta la altura del header */
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 9999;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+  padding: 20px; /* Padding para el contenedor */
+}
+
+.menu.open {
+  transform: translateX(0);
+  background-color: #074C73; /* Color de fondo cuando el menú está abierto */
+}
+
+.menu-list {
+  background-color: #074C73;
+  list-style-type: none; /* Quitar viñetas de la lista */
+  padding: 0; /* Quitar padding */
+  margin-top: 3rem; /* Quitar margen */
+}
+
+/* Estilos para los ítems del menú */
+.menu-item {
+  background-color: #ffffff;
+  --color: #ffffff; /* Color del texto del botón */
+  margin-bottom: 0.8rem; /* Espacio entre ítems */
+}
+
+/* Estilos para las etiquetas dentro de los ítems del menú */
 .menu-item ion-label {
-    display: block; /* Asegura que el label sea un bloque */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-    color: #ffffff; /* Color del texto */
-    background-color: #074C73; /* Asegurar el fondo */
-    padding: 10px; /* Añadir padding para el área de clic */
-    border-radius: 4px; /* Bordes redondeados para mejor apariencia */
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Transición suave para el color del texto */
-  }
-  .menu-item:hover {
-    background-color: #f4f4f4;
-  }
-  
+  display: block; /* Asegura que el label sea un bloque */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  color: #ffffff; /* Color del texto */
+  background-color: #074C73; /* Asegurar el fondo */
+  padding: 10px; /* Añadir padding para el área de clic */
+  border-radius: 4px; /* Bordes redondeados para mejor apariencia */
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Transición suave para el color del texto */
+}
 
-  .menu-item ion-label:hover {
-    color: #0056b3; /* Color del texto al pasar el cursor por encima */
-  }
-  
-  /* Estilos para el botón dentro de los ítems del menú */
-  .menu-item ion-button {
-    width: 100%; /* Hacer que el botón ocupe todo el ancho */
-    --background: #074C73; /* Color de fondo del botón */
-    --color: #ffffff; /* Color del texto del botón */
-  }
-  
- 
+.menu-item:hover {
+  background-color: #f4f4f4;
+}
 
+.menu-item ion-label:hover {
+  color: #0056b3; /* Color del texto al pasar el cursor por encima */
+}
 
+/* Estilos para el botón dentro de los ítems del menú */
+.menu-item ion-button {
+  width: 100%; /* Hacer que el botón ocupe todo el ancho */
+  --background: #074C73; /* Color de fondo del botón */
+  --color: #ffffff; /* Color del texto del botón */
+}
 
 /*////////////////////TARJETA CENTRAL//////////////////////*/
-  /* Contenedor padre para centrar la tarjeta */
 .parent-container {
-    display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: flex-start; /* Alinear al inicio verticalmente, puedes ajustar según sea necesario */
-    min-height: 10vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
-    padding: 20px; /* Añadir un poco de padding para el espaciado */
-    box-sizing: border-box;
-  }
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: flex-start; /* Alinear al inicio verticalmente, puedes ajustar según sea necesario */
+  min-height: 10vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  padding: 20px; /* Añadir un poco de padding para el espaciado */
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
   
-  /* Estilos para la tarjeta */
-  .activities-card {
-    width: 70%; /* Ancho para pantallas grandes */
-    background-color: #DDE3E5; 
-    box-shadow: 0 4px 8px rgba(67, 55, 55, 0.1); /* Sombra para un mejor diseño */
-    transition: width 0.3s ease-in-out; /* Suave transición al cambiar el tamaño */
-  }
-  
+}
+.container-PendigTask{
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: flex-start; /* Alinear al inicio verticalmente, puedes ajustar según sea necesario */
+  min-height: 10vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  padding: 20px; /* Añadir un poco de padding para el espaciado */
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -20.5 rem;
+}
+.container-InProgress{
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: flex-start; /* Alinear al inicio verticalmente, puedes ajustar según sea necesario */
+  padding: 20px; /* Añadir un poco de padding para el espaciado */
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -20.5 rem;
+}
 
+.activities-card {
+  max-width: 900px; /* Ajusta este valor según tu preferencia */
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(67, 55, 55, 0.1); /* Sombra para un mejor diseño */
+  transition: width 0.3s ease-in-out; /* Suave transición al cambiar el tamaño */
+}
 
-  .parent-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .activities-card {
-    max-width: 900px; /* Ajusta este valor según tu preferencia */
-    width: 100%;
-  }
-  
-  .activity-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px; /* Ajusta este valor según tu preferencia */
-  }
-  
-  .activity-icon {
-    width: 50px; /* Ajusta este valor según tu preferencia */
-    height: auto;
-    margin-right: 10px; /* Ajusta este valor según tu preferencia */
-  }
-  
-  .activity-content {
-    flex: 1;
-  }
-  
-  .activity-content p {
-    margin: 5px 0;
-  }
+.activity-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Ajusta este valor según tu preferencia */
+}
 
-  .activity-content p {
-    margin: 5px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 250px; /* Ajusta este valor según tu preferencia */
-  }
-  
+.activity-icon {
+  width: 50px; /* Ajusta este valor según tu preferencia */
+  height: auto;
+  margin-right: 10px; /* Ajusta este valor según tu preferencia */
+}
 
+.activity-content {
+  flex: 1;
+}
 
-    /*/////////////////CALENDARIO/////////////////*/
-  /* Estilos para el contenedor del calendario */
+.activity-content p {
+  margin: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px; /* Ajusta este valor según tu preferencia */
+}
+
+/*/////////////////CALENDARIO/////////////////*/
+/* Estilos para el contenedor del calendario */
 .calendar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80%;
-    margin: -80px auto 0;
-  }
-  
-  /* Estilos para el calendario */
-  .react-calendar {
-    width: 100%;
-    max-width: 600px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Estilos para los días de la semana en el calendario */
-  .react-calendar__month-view__weekdays {
-    font-weight: bold;
-    padding: 8px 0;
-  }
-  
-  /* Estilos para los nombres de los días de la semana en el calendario */
-  .react-calendar__month-view__weekdays__weekday {
-    color: #333;
-  }
-  
-  /* Estilos para los días del mes en el calendario */
-  .react-calendar__tile {
-    padding: 10px;
-    text-align: center;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Estilos para los días del mes que no son parte del mes actual */
-  .react-calendar__tile--inactive {
-    color: #ccc;
-  }
-  
-  /* Estilos para los días del mes que son parte del mes actual */
-  .react-calendar__tile--active {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  /* Estilos para los días seleccionados en el calendario */
-  .react-calendar__tile--rangeStart,
-  .react-calendar__tile--rangeEnd,
-  .react-calendar__tile--range {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  /* Estilos para los días seleccionados que no son parte del rango */
-  .react-calendar__tile--rangeStart:not(.react-calendar__tile--rangeEnd),
-  .react-calendar__tile--rangeEnd:not(.react-calendar__tile--rangeStart),
-  .react-calendar__tile--range:not(.react-calendar__tile--rangeStart):not(.react-calendar__tile--rangeEnd) {
-    background-color: rgba(0, 123, 255, 0.5);
-    color: white;
-  }
-  
-  /* Estilos para los días de la semana en la vista de múltiples semanas */
-  .react-calendar__tile--weekend {
-    background-color: #f8f9fa;
-  }
-  
-  /* Estilos para los botones de cambio de mes y año en el calendario */
-  .react-calendar__navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  /* Estilos para los botones de cambio de mes y año en el calendario */
-  .react-calendar__navigation__label {
-    font-size: 1.2em;
-  }
-  
-  /* Estilos para los botones de cambio de mes y año en el calendario */
-  .react-calendar__navigation__prev-button,
-  .react-calendar__navigation__next-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: #007bff;
-    transition: color 0.3s ease;
-  }
-  
-  /* Estilos para los botones de cambio de mes y año en el calendario */
-  .react-calendar__navigation__prev-button:hover,
-  .react-calendar__navigation__next-button:hover {
-    color: #0056b3;
-  }
-  
-  /* Estilos para el título del calendario (mes y año) */
-  .react-calendar__tile--hasActive {
-    background: #007bff;
-    color: white;
-  }
-  
-  /* Estilos para los días de la semana en la vista de múltiples semanas */
-  .react-calendar__tile--weekend {
-    background-color: #f8f9fa;
-  }
-  
-  
-  
-  .centered-button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 0%;
-  }
-    
-  .centered-button {
-      text-align: center;
-  }
-    
-  .bottom-button {
-      width: 60px; /* Ancho del botón */
-      height: 60px; /* Altura del botón */
-      font-size: 24px; /* Tamaño de la fuente del botón */
-  }
-  
-  .AtrasButtom{
-      align-items: center;
-      text-align: center;
-      height: 45px;
-      width: 350px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30rem;
+}
+
+/* Estilos para el calendario */
+.react-calendar {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos para los días de la semana en el calendario */
+.react-calendar__month-view__weekdays {
+  font-weight: bold;
+  padding: 8px 0;
+}
+
+/* Estilos para los nombres de los días de la semana en el calendario */
+.react-calendar__month-view__weekdays__weekday {
+  color: #333;
+}
+
+/* Estilos para los días del mes en el calendario */
+.react-calendar__tile {
+  padding: 10px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para los días del mes que no son parte del mes actual */
+.react-calendar__tile--inactive {
+  color: #ccc;
+}
+
+/* Estilos para los días del mes que son parte del mes actual */
+.react-calendar__tile--active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Estilos para los días seleccionados en el calendario */
+.react-calendar__tile--rangeStart,
+.react-calendar__tile--rangeEnd,
+.react-calendar__tile--range {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Estilos para los días seleccionados que no son parte del rango */
+.react-calendar__tile--rangeStart:not(.react-calendar__tile--rangeEnd),
+.react-calendar__tile--rangeEnd:not(.react-calendar__tile--rangeStart),
+.react-calendar__tile--range:not(.react-calendar__tile--rangeStart):not(.react-calendar__tile--rangeEnd) {
+  background-color: rgba(0, 123, 255, 0.5);
+  color: white;
+}
+
+/* Estilos para los días de la semana en la vista de múltiples semanas */
+.react-calendar__tile--weekend {
+  background-color: #f8f9fa;
+}
+
+/* Estilos para los botones de cambio de mes y año en el calendario */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para los botones de cambio de mes y año en el calendario */
+.react-calendar__navigation__label {
+  font-size: 1.2em;
+}
+
+/* Estilos para los botones de cambio de mes y año en el calendario */
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.react-calendar__navigation__prev-button:hover,
+.react-calendar__navigation__next-button:hover {
+  color: #0056b3;
+}
+
+/* Estilos para el título del calendario (mes y año) */
+.react-calendar__tile--hasActive {
+  background: #007bff;
+  color: white;
+}
+
+/* Estilos para los días de la semana en la vista de múltiples semanas */
+.react-calendar__tile--weekend {
+  background-color: #f8f9fa;
+}
+
+.centered-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0%;
+}
+
+.centered-button {
+  text-align: center;
+}
+
+.bottom-button {
+  width: 60px; /* Ancho del botón */
+  height: 60px; /* Altura del botón */
+  font-size: 24px; /* Tamaño de la fuente del botón */
+}
+
+.AtrasButtom {
+  align-items: center;
+  text-align: center;
+  height: 45px;
+  width: 350px;
+}
