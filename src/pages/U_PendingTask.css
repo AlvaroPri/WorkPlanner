@@ -27,5 +27,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .projects-title-user
+  {
+    margin: 0.25rem;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #074C73; /* Color del texto */
+  }
+  .header-title-user{
+    color: #074C73 !important
+  }
   
  
