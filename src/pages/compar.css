@@ -35,16 +35,6 @@ body, html {
   margin: 0;
   font-weight: bold;
 }
-.header-title-user{
-  color: #074C73 !important
-}
-.projects-title-user
-  {
-    margin: 0.25rem;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #074C73; /* Color del texto */
-  }
 
 /* Estilos para el contenedor del logo y "WorkPlanner" */
 .logo-title-container {
@@ -64,12 +54,6 @@ body, html {
 
 /* Estilos para el título "Projects" en el header */
 .projects-title {
-  margin: 0.25rem;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #ffffff; /* Color del texto */
-}
-.projects-title-user {
   margin: 0.25rem;
   font-size: 1.5em;
   font-weight: bold;

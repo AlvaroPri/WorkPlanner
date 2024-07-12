@@ -88,11 +88,11 @@ const U_PendingTask: React.FC = () => {
         <IonToolbar>
           <div className="logo-title-container">
             <IonImg src={logo} className="logo" />
-            <IonTitle className="header-title-user">WorkPlanner</IonTitle>
+            <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
 
           <div className="projects-title-container">
-            <IonTitle className="projects-title-user">Pending Task</IonTitle>
+            <IonTitle className="projects-title">Pending Task</IonTitle>
           </div>
           
           <IonButton slot="end" onClick={toggleMenu }>
@@ -123,7 +123,7 @@ const U_PendingTask: React.FC = () => {
           <IonCardContent>
             {pendingTasks.map((activity: Project) => (
               <div key={activity.id} className="activity-item">
-                <IonButton onClick={() => history.push("/U_Complete")} className="image-button">
+                <IonButton onClick={() => history.push("/Complete")} className="image-button">
                   <IonImg src={logo} className="activity-icon" />
                 </IonButton>
                 <div className="activity-content">

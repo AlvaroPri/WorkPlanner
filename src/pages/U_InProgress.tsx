@@ -110,13 +110,13 @@ const U_InProgress: React.FC = () => {
             <IonImg src={logo} className="logo" />
 
             {/* Título "WorkPlanner" */}
-            <IonTitle className="header-title-user">WorkPlanner</IonTitle>
+            <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
 
           {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
             {/* Título "Projects" */}
-            <IonTitle className="projects-title-user">In Progress</IonTitle>
+            <IonTitle className="projects-title">In Progress</IonTitle>
           </div>
           
           <IonButton slot="end" onClick={toggleMenu}>

@@ -132,10 +132,10 @@ const Home: React.FC = () => {
         <IonToolbar>
           <div className="logo-title-container">
             <IonImg src={logo} className="logo" />
-            <IonTitle className="header-title-user">WorkPlanner</IonTitle>
+            <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
           <div className="projects-title-container">
-            <IonTitle className="projects-title-user">Projects Users</IonTitle>
+            <IonTitle className="projects-title">Projects Users</IonTitle>
           </div>
           <IonButton slot="end" onClick={toggleMenu}>
             <IonIcon icon={menuOpen ? "close-circle" : appsOutline} />

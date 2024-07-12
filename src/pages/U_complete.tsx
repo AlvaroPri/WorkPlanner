@@ -91,13 +91,13 @@ const U_Complete: React.FC = () => {
             <IonImg src={logo} className="logo" />
 
             {/* Título "WorkPlanner" */}
-            <IonTitle className="header-title-user">WorkPlanner</IonTitle>
+            <IonTitle className="header-title">WorkPlanner</IonTitle>
           </div>
 
           {/* Contenedor del título "Projects" */}
           <div className="projects-title-container">
             {/* Título "Projects" */}
-            <IonTitle className="projects-title-user">Complete</IonTitle>
+            <IonTitle className="projects-title">Complete</IonTitle>
           </div>
           
           <IonButton slot="end" onClick={toggleMenu}>
